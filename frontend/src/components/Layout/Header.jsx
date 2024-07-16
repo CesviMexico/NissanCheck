@@ -27,7 +27,7 @@ import bellOutline from "@iconify/icons-mdi/bell-outline";
 import { AvatarMUI } from "../Global/AvatarComponent";
 import BadgeMUIImg from "../Global/BadgeComponent";
 import CloudPlatform from './CloudPlatform'
-import CardColaborador from "../Global/Colaborador/CardColaborador";
+import {GridColaborador} from "../Global/Colaborador/CardColaborador";
 
 //servicios
 import { DataOneUser } from "./Services";
@@ -250,10 +250,10 @@ const HeaderComponent = () => {
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
         <Box sx={{ flexGrow: 1 }}>
-          <CardColaborador user={user} />
+          <GridColaborador user={user} />
         </Box>
         <Divider />  <Divider />
-
+{/* 
         <MenuItemB>
           <ListItemIcon>
             <Icon
@@ -264,8 +264,8 @@ const HeaderComponent = () => {
           <Typography variant="caption" display="block" gutterBottom>
             Portafolio
           </Typography>
-        </MenuItemB>
-        <MenuItemB>
+        </MenuItemB> */}
+        {/* <MenuItemB>
           <ListItemIcon>
             <Icon
               icon={"material-symbols:settings-account-box-outline-rounded"}
@@ -275,7 +275,7 @@ const HeaderComponent = () => {
           <Typography variant="caption" display="block" gutterBottom>
             Configuracion
           </Typography>
-        </MenuItemB>
+        </MenuItemB> */}
 
         {!keycloak.authenticated && (
           <MenuItemB onClick={(event) => handleSalir(event, "Login")}>
