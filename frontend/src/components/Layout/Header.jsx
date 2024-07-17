@@ -80,7 +80,7 @@ const HeaderComponent = () => {
       user_info.sub
     );
 
-    console.log("DatosPerfil", response)
+    // console.log("DatosPerfil", response)
 
     updateUser({
       ...response[0],

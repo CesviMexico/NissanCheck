@@ -7,7 +7,7 @@ import TablaANTD from "../../../components/Global/TablaComponent";
 import Grid from "@mui/material/Grid";
 
 const ModalHistorico = (props) => {
-    const { visibleHist, setVisibleHist, loadingGral, tabCol, tabData, setTabData, tabProps } = props
+    const { visibleHist, setVisibleHist, loadingHist, tabCol, tabData, setTabData, tabProps } = props
 
     const OnClickAction = (row, key) => {
         swicthComponentAction[key](row)
@@ -24,7 +24,7 @@ const ModalHistorico = (props) => {
     return (
         <ModdalANTD
             visible={visibleHist}
-            title={"Historial de evaluaciones"}
+            title={"Historial de aditorias"}
             footer={false}
             onCancel={() => setVisibleHist(false)}
             width={"75%"}
@@ -33,7 +33,7 @@ const ModalHistorico = (props) => {
             <Grid container spacing={1}>
                 <Grid item xs={12}>
                     <TablaANTD
-                        loading={loadingGral}
+                        loading={loadingHist}
                         columnsTable={tabCol}
                         datasource={tabData}
                         setDataSource={setTabData}

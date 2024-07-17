@@ -348,18 +348,18 @@ const TablaANTD = (props) => {
           <Tooltip
             placement="topRight"
             title={tooltip}
-            key={Uid(index)}
+            key={Uid(index+1)}
           >
             {titleMSG ?
               <Popconfirm
-                key={Uid(index)}
+                key={Uid(index+2)}
                 title={titleMSG}
                 okText="Si"
                 cancelText="No"
                 onConfirm={() => OnClickAction(row, key)}
               >
                 <>
-                  <Icon icon={IconAction} key={Uid(index)}
+                  <Icon icon={IconAction} key={Uid(index+3)}
                     style={{
                       cursor: "pointer",
                       fontSize: themeGral.action_sizeIcon,
@@ -371,7 +371,7 @@ const TablaANTD = (props) => {
               </Popconfirm>
               :
               <>
-                <Icon icon={IconAction} key={Uid(index)}
+                <Icon icon={IconAction} key={Uid(index+4)}
                   style={{
                     cursor: "pointer",
                     fontSize: themeGral.action_sizeIcon,

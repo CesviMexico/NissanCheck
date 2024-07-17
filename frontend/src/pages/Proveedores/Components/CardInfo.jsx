@@ -39,7 +39,7 @@ const CardInfo = (props) => {
                             level="body-sm"
                             noWrap={false}
                             variant="soft"
-                            sx={{ borderRadius: 10, maxWidth: '85%' }}
+                            sx={{ borderRadius: 10 }}
                         > {"Cumplimiento "}
                             {
                                 dataItem.socre >= dataItem.limite_3 ? <span style={{ color: '#887f83', margin: '-1em 0 0 5px ' }}> Platino</span> :
@@ -93,7 +93,7 @@ const CardInfo = (props) => {
                         cursor: "pointer",
                     }}
                 >
-                    {"Auditorios :  " + dataItem.noAudito}
+                    {"Auditorias :  " + dataItem.noAudito}
                 </CardOverflow>
 
             </Card>
