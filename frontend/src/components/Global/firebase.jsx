@@ -1,11 +1,11 @@
 
 export const firebaseConfig = {
-  apiKey: "AIzaSyBOWhmmuxNY9paWfwIO-GMmgwsi5iSLfKY",
-  authDomain: "encuesta-cesvi-dev.firebaseapp.com",
-  projectId: "encuesta-cesvi-dev",
-  storageBucket: "encuesta-cesvi-dev.appspot.com",
-  messagingSenderId: "555149777956",
-  appId: "1:555149777956:web:336505cc2674b844d38cb1"
+  apiKey: "XxxXXxXXX",
+  authDomain: "xxxxxxx.firebaseapp.com",
+  projectId: "xxxxxx",
+  storageBucket: "xxxxxxx.appspot.com",
+  messagingSenderId: "xxxxxxx",
+  appId: "1:xxxxx:web:xxxxxxx"
 };
 
 
