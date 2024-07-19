@@ -14,9 +14,8 @@ import Grid from "@mui/material/Grid";
 
 import { Image } from 'antd';
 
-
 const CardInfo = (props) => {
-    const { dataItem, onviewGal, modalHist, onViewMaps,fontSize=25  } = props
+    const { dataItem, onviewGal, modalHist, onViewMaps, fontSize = 25 } = props
 
     const themeContext = useContext(ThemeContext);
     const { themeGral } = themeContext;
@@ -64,11 +63,13 @@ const CardInfo = (props) => {
                         <Image
                             visible={0}
                             width={'100%'}
-                            src={"https://appweb.cesvimexico.com.mx/LevInfoCesvi/assets/evidencia/" + dataItem.path_img}
+                            src={dataItem.path_img ? dataItem.path_img : "error"}
+                            fallback={process.env.REACT_APP_fallbackImg}
                         />
                     </AspectRatio>
                 </CardOverflow>
                 <CardContent sx={{ px: 1, }} >
+                    <span><strong>Distribuidor: </strong>{dataItem.distribuidor}</span>
                     <span><strong>Dirección: </strong>{dataItem.full_dir}</span>
                     <span><strong>Teléfono: </strong>{dataItem.tel_1}</span>
                     <span><strong>Grupo: </strong>{dataItem.grupo}</span>
@@ -166,7 +167,7 @@ const CardInfo = (props) => {
                     level="title-sm"
                     startDecorator={
                         <IconButton
-                            onClick={() => onviewGal(dataItem.url_code)}
+                            onClick={() => onviewGal(dataItem.url_code,'foto')}
                             size="sm"
                             variant="plain"
                             color="neutral"
@@ -184,6 +185,30 @@ const CardInfo = (props) => {
                         </IconButton>
                     }>
                     Galeria
+                </Typography>
+                <Divider orientation="vertical" />
+                <Typography
+                    level="title-sm"
+                    startDecorator={
+                        <IconButton
+                            onClick={() => onviewGal(dataItem.url_code,'video')}
+                            size="sm"
+                            variant="plain"
+                            color="neutral"
+                            sx={{ ml: 'auto', alignSelf: 'flex-start' }}
+                        >
+                            <Icon icon={"clarity:video-gallery-line"}
+                                // key={key}
+                                style={{
+                                    cursor: "pointer",
+                                    fontSize: fontSize,
+                                    // marginLeft: "5px",
+                                    color: themeGral.header_colorIconMenu
+                                }}
+                            />
+                        </IconButton>
+                    }>
+                    Videos
                 </Typography>
             </CardOverflow>
         </Card>

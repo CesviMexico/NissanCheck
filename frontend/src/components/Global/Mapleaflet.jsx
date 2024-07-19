@@ -39,7 +39,8 @@ function Map({ markerPosition, olat, olng, direccion_origen, markerPositionGRAL,
         arrayMarkas.map(function(taller) {
           if (taller.latitude !== 'No hay datos') {
             var marca = [taller.latitude,taller.longitud]
-            var popup_html = '<div style="width="500px"; height="300px"> <h5>'+taller.razon_social +'</h5><p><a href="https://appweb.cesvimexico.com.mx/LevInfoCesvi/assets/ScripWeb/reportPDF/PDFEvaluacionBAJAJ.php?code_acces='+ taller.url_code +'" target="_blank">ficha tecnica</a></p> <iframe src="https://www.google.com/maps/embed/v1/streetview?location='+ marca[0] + ',' +  marca[1]+'&fov=80&heading=70&pitch=0&key=xxxxxx" width="250" height="250" ></iframe></div>';
+            var popup_html = '<div style="width="500px"; height="300px"> <h5>'+taller.razon_social +'</h5><p><a href="https://appweb.cesvimexico.com.mx/LevInfoCesvi/assets/ScripWeb/reportPDF/PDFEvaluacionBAJAJ.php?code_acces='+ taller.url_code +'" target="_blank">ficha tecnica</a></p> <iframe src="https://www.google.com/maps/embed/v1/streetview?location='+ marca[0] + ',' +  marca[1]+'&fov=80&heading=70&pitch=0&key=AIzaSyDy9_oujjehBZLM-MTMic1FY0BzQimmZoQ" width="250" height="250" ></iframe></div>';
+            // var popup_html = '<div style="width="500px"; height="300px"> <h5>'+taller.razon_social +'</h5><p><a href="https://appweb.cesvimexico.com.mx/LevInfoCesvi/assets/ScripWeb/reportPDF/PDFEvaluacionBAJAJ.php?code_acces='+ taller.url_code +'" target="_blank">ficha tecnica</a></p> <iframe src="https://www.google.com/maps/embed/v1/streetview?location='+ marca[0] + ',' +  marca[1]+'&fov=80&heading=70&pitch=0&key=xxxxxx" width="250" height="250" ></iframe></div>';
             if (taller.cumplimiento == 'PLATINO') {
               var colorIcon = 'marker_platino.png'
             }else if(taller.cumplimiento == 'ORO'){

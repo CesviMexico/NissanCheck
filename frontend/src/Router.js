@@ -21,6 +21,7 @@ import Page403 from "./pages/Page403";
 //Modelo del Negocio  
 import Proveedores from "./pages/Proveedores/Proveedores";
 import Busqueda from "./pages/Busqueda/Busqueda";
+import Distribuidor from "./pages/Distribuidor/Distribuidor";
 
 
 import { Spin } from "antd";
@@ -51,6 +52,7 @@ const Router = () => {
           {/* Modelo del Negocio   */}
           <Route path="Modelo/Proveedores" element={<PrivateRoute><Layout><Proveedores /></Layout></PrivateRoute>} />
           <Route path="Modelo/Busqueda" element={<PrivateRoute><Layout><Busqueda /></Layout></PrivateRoute>} />
+          <Route path="Modelo/Distribuidor" element={<PrivateRoute><Layout><Distribuidor /></Layout></PrivateRoute>} />
 
 
           <Route path="/Page403" element={<PrivateRoute><Page403 /> </PrivateRoute>} />

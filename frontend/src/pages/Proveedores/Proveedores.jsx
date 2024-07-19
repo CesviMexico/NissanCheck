@@ -26,7 +26,7 @@ import { ExportToExcel, Uid } from '../../components/Global/funciones'
 //component local
 import CardInfo from './Components/CardInfo'
 import ModalHistorico from './Components/ModalHistorico'
-import ModalGaleria from './Components/ModalGaleria'
+import ModalGaleriaFotos, { ModalGaleriaVideo } from './Components/ModalGaleria'
 import ModalMaps from './Components/ModalMaps'
 
 
@@ -101,9 +101,11 @@ const Proveedores = (props) => {
   }
 
   //image action
-  const [visible, setVisible] = useState(false)
+  const [visibleFotos, setVisibleFotos] = useState(false)
+  const [visibleVideos, setVisibleVideos] = useState(false)
+
   const [listImage, setListImage] = useState([])
-  const onviewGal = async (code) => {
+  const onviewGal = async (code, tipo) => {
     try {
       const response = await GetGalery(
         setloading,
@@ -112,7 +114,7 @@ const Proveedores = (props) => {
         logoutOptions,
         code
       )
-      // console.log("onviewGal", response);
+      console.log("GetGalery", response);
       switch (response.status) {
         case 403:
           setloading(false);
@@ -123,8 +125,20 @@ const Proveedores = (props) => {
           break;
 
         case 200:
-          setVisible(true)
-          setListImage(response.data)
+          switch (tipo) {
+            case 'foto':
+              setVisibleFotos(true)
+              setListImage(response.data.filter(item => item.tipo == "foto"))
+              break;
+            case 'video':
+              setVisibleVideos(true)
+              setListImage(response.data.filter(item => item.tipo == "video"))
+              break;
+            default:
+              break;
+          }
+
+
           break;
 
         default:
@@ -317,9 +331,14 @@ const Proveedores = (props) => {
     <>
       <Box sx={{ display: "flex", flexWrap: "wrap", "& > :not(style)": { m: 1, width: "99%", height: "100%" }, }} >
 
-        <ModalGaleria
-          visible={visible}
-          setVisible={setVisible}
+        <ModalGaleriaFotos
+          visible={visibleFotos}
+          setVisible={setVisibleFotos}
+          listImage={listImage}
+        />
+        <ModalGaleriaVideo
+          visible={visibleVideos}
+          setVisible={setVisibleVideos}
           listImage={listImage}
         />
 
@@ -487,7 +506,7 @@ const Proveedores = (props) => {
                   </Tooltip>
                   <Tooltip title={"Exportar a Excel"} >
                     <IconButton aria-label="settings"
-                    //onClick={() => ExportToExcelButton()} 
+                      onClick={() => ExportToExcel({ datasource: FiterData(dataItem, filter), Title: "Resultados de la búsqueda", })}
                     >
                       <Icon icon={"mdi:microsoft-excel"} style={{ fontSize: themeGral.table_sizeIcon, color: themeGral.header_colorIconMenu }} />
                     </IconButton>
