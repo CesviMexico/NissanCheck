@@ -19,7 +19,7 @@ const ModalMaps = (props) => {
     return (
         <ModdalANTD
             visible={visibleMaps}
-            title={"Maps"}
+            title={" "}
             footer={false}
             onCancel={() => setVisibleMaps(false)}
             width={"85%"}

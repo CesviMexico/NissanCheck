@@ -16,7 +16,10 @@ import { GetGalery } from "../Proveedores/Services";
 
 //component Global
 import TablaANTD from "../../components/Global/TablaComponent";
-import ModalGaleria from '../Proveedores/Components/ModalGaleria'
+import ModalGaleriaFotos, { ModalGaleriaVideo } from '../Proveedores/Components/ModalGaleria'
+import ModalMaps from '../Proveedores/Components/ModalMaps'
+
+
 
 const Busqueda = () => {
 
@@ -74,7 +77,9 @@ const Busqueda = () => {
   }
   const swicthComponentAction = {
     Informe: (row) => onViewRes(row),
-    Galeria: (row) => onviewGal(row.url_code)
+    Galeria: (row) => onviewGal(row.url_code, 'foto'),
+    Videos: (row) => onviewGal(row.url_code, 'video'),
+    Mapa: (row) => onViewMaps(row)
   }
   const onViewRes = (row) => {
     let code = row.url_code
@@ -83,9 +88,11 @@ const Busqueda = () => {
 
 
   //image action
-  const [visible, setVisible] = useState(false)
+  const [visibleFotos, setVisibleFotos] = useState(false)
+  const [visibleVideos, setVisibleVideos] = useState(false)
+
   const [listImage, setListImage] = useState([])
-  const onviewGal = async (code) => {
+  const onviewGal = async (code, tipo) => {
     try {
       const response = await GetGalery(
         setloading,
@@ -94,7 +101,7 @@ const Busqueda = () => {
         logoutOptions,
         code
       )
-      // console.log("onviewGal", response);
+      console.log("onviewGal", response);
       switch (response.status) {
         case 403:
           setloading(false);
@@ -105,8 +112,18 @@ const Busqueda = () => {
           break;
 
         case 200:
-          setVisible(true)
-          setListImage(response.data)
+          switch (tipo) {
+            case 'foto':
+              setVisibleFotos(true)
+              setListImage(response.data.filter(item => item.tipo == "foto"))
+              break;
+            case 'video':
+              setVisibleVideos(true)
+              setListImage(response.data.filter(item => item.tipo == "video"))
+              break;
+            default:
+              break;
+          }
           break;
 
         default:
@@ -127,21 +144,61 @@ const Busqueda = () => {
     setValueSelect(value)
   }
 
+  //maps
+  const [visibleMaps, setVisibleMaps] = useState(false)
+  const [create, setCreate] = useState([])
+  const [latitud, setLatitud] = useState()
+  const [longitud, setLongitud] = useState()
+  const [zoom, setZoom] = useState()
+  const [arrayMarkInfo, setArrayMarkInfo] = useState([])
+  const [arrayMarkProv, setArrayMarkProv] = useState([])
+  const onViewMaps = (row) => {
+    setVisibleMaps(true)
+    setLatitud(row.latitude)
+    setLongitud(row.longitud)
+    setZoom(5)
+    setArrayMarkInfo([row])
+  }
+   //inicaliza maps
+   useEffect(() => {
+    setLatitud(19.400352327662368)
+    setLongitud(-99.56366303164687)
+    setZoom(5)
+    setCreate('null')
+  }, []);
+
   return (
     <>
       <Box sx={{ display: "flex", flexWrap: "wrap", "& > :not(style)": { m: 1, width: "99%", height: "100%" }, }}>
 
-        <ModalGaleria
-          visible={visible}
-          setVisible={setVisible}
+
+        <ModalGaleriaFotos
+          visible={visibleFotos}
+          setVisible={setVisibleFotos}
           listImage={listImage}
+        />
+        <ModalGaleriaVideo
+          visible={visibleVideos}
+          setVisible={setVisibleVideos}
+          listImage={listImage}
+        />
+
+        <ModalMaps
+          visibleMaps={visibleMaps}
+          setVisibleMaps={setVisibleMaps}
+          create={create}
+          latitud={latitud}
+          longitud={longitud}
+          zoom={zoom}
+          arrayMarkInfo={arrayMarkInfo}
+          arrayMarkProv={arrayMarkProv}
         />
 
         <Grid container spacing={1}>
           <Grid item xs={12}>
             <CardAntd
               style={{ width: '99%' }}
-              title="Búsqueda por razon social"
+            // title="Búsqueda por distribuidor"
             >
               <Grid container spacing={1}>
                 <Grid item xs={12} sm={12} md={12}>
@@ -149,7 +206,7 @@ const Busqueda = () => {
                     size="large"
                     style={{ width: '100%', }}
                     options={options}
-                    placeholder="Búsqueda por razon social"
+                    placeholder="Ingresa nombre del distribuidor"
                     filterOption={(inputValue, options) =>
                       options.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
                     }

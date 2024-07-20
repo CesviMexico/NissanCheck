@@ -52,7 +52,7 @@ export const ThemeProvider = (props) => {
     const [logoutOptions, setLogoutOptions] = useState('http://localhost:3000/#/')
 
 //MODULOS
-const [Modulo, setModulo] = useState("Cesvi Check")
+const [Modulo, setModulo] = useState("HERRAMIENTAS Y EQUIPOS ESPECIALES DE SERVICIO (HES)")
 const [id_Modulo, setIId_Modulo] = useState(1)
 
 

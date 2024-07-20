@@ -12,7 +12,13 @@ import { AspectRatio } from '@mui/joy';
 import IconButton from '@mui/material/IconButton';
 import Grid from "@mui/material/Grid";
 
-import { Image } from 'antd';
+import CardHeader from '@mui/material/CardHeader';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import Avatar from '@mui/material/Avatar';
+import { red } from '@mui/material/colors';
+
+
+import { Image, Tooltip, } from 'antd';
 
 const CardInfo = (props) => {
     const { dataItem, onviewGal, modalHist, onViewMaps, fontSize = 25 } = props
@@ -27,36 +33,67 @@ const CardInfo = (props) => {
 
     return (
         <Card sx={{ borderRadius: 10, width: '100%', maxWidth: '100%' }}>
-            <CardContent>
-                <Grid container spacing={1}>
-                    <Grid item xs={10}>
-                        <Typography fontWeight="md" textColor="success.plainColor" level="title-lg">{dataItem.razon_social}</Typography>
-                    </Grid>
-                    <Grid item xs={2}>
-                        <Typography
+            <CardHeader
+                sx={{ borderRadius: 0, mb: -2, border: 0, width: '100%', mt: -2 }}
+                // avatar={<Avatar sx={{ bgcolor: red[500] }} aria-label="recipe"> R </Avatar> }
+                // dataItem.noAudito
+                action={
+                    <Tooltip title="Historial de auditorías">
+                        <IconButton
+                            onClick={() => modalHist(dataItem.url_code)}
+                            size="medium"
+                            variant="plain"
+                            color="neutral"
+                            sx={{ ml: 'auto', alignSelf: 'flex-start', mt: -0.5, mb: -1, mr: -2 }}
+                        >
+                            <Icon icon={"fluent:document-text-clock-20-regular"}
+                                style={{
+                                    cursor: "pointer",
+                                    fontSize: fontSize + 3,
+                                    // marginLeft: "5px",
+                                    color: themeGral.header_colorIconMenu
+                                }}
+                            />
+                        </IconButton>
+                    </Tooltip>
+                }
+                title={<Typography fontWeight="md" textColor="success.plainColor" level="h4" >{dataItem.distribuidor}</Typography>}
+                subheader={dataItem.date_str} //"September 14, 2016"
+            />
+
+            {/* <CardContent> */}
+            {/* <Grid container spacing={1}> */}
+            {/* <Grid item xs={10}>
+                        <Typography fontWeight="md" textColor="success.plainColor" level="title-lg">{dataItem.distribuidor}</Typography>
+                    </Grid> */}
+            {/* <Grid item xs={2}> */}
+            {/* <Typography
+                            onClick={() => modalHist(dataItem.url_code)}
                             color="success"
-                            level="body-sm"
+                            level="body-lg"
                             noWrap={false}
                             variant="soft"
                             sx={{ borderRadius: 10 }}
-                        > {"Cumplimiento "}
-                            {
+                        > */}
+            {/* {"Auditorias :  " + dataItem.noAudito} */}
+            {/* {"Cumplimiento "} */}
+            {/* {
                                 dataItem.socre >= dataItem.limite_3 ? <span style={{ color: '#887f83', margin: '-1em 0 0 5px ' }}> Platino</span> :
                                     dataItem.socre >= dataItem.limite_2 ? <span style={{ color: '#f8ca47', margin: '-1em 0 0 5px ' }}>  Oro</span> :
                                         dataItem.socre >= dataItem.limite_1 ? <span style={{ color: '#cccccc', margin: '-1em 0 0 5px ' }}>  Plata</span> :
                                             dataItem.socre < dataItem.limite_1 ? <span style={{ color: '#048B96', margin: '-1em 0 0 5px ' }}>  Básico</span> :
                                                 dataItem.socre != 'No evaluado' ? <span style={{ color: '#ccc', margin: '-1em 0 0 5px ' }}> No evaluado</span> :
                                                     <span style={{ margin: '-1em 0 0 5px ' }}> {dataItem.socre}</span>
-                            }
-                        </Typography>
-                    </Grid>
-                </Grid>
-            </CardContent>
+                            } */}
+            {/* </Typography> */}
+            {/* </Grid> */}
+            {/* </Grid> */}
+            {/* </CardContent> */}
 
             <Card
                 orientation="horizontal"
                 size="sm"
-                sx={{ bgcolor: 'background.surface', borderRadius: 0, mb: 0, border: 0, width: '101.7%', }}
+                sx={{ bgcolor: 'background.surface', borderRadius: 0, mb: -0, border: 0, width: dataItem.socre && '102.7%', }}
             >
                 <CardOverflow>
                     <AspectRatio ratio="1" sx={{ width: 160, borderRadius: 10, }}>
@@ -69,34 +106,36 @@ const CardInfo = (props) => {
                     </AspectRatio>
                 </CardOverflow>
                 <CardContent sx={{ px: 1, }} >
-                    <span><strong>Distribuidor: </strong>{dataItem.distribuidor}</span>
                     <span><strong>Dirección: </strong>{dataItem.full_dir}</span>
                     <span><strong>Teléfono: </strong>{dataItem.tel_1}</span>
                     <span><strong>Grupo: </strong>{dataItem.grupo}</span>
+                    <span><strong>Razón social: </strong>{dataItem.razon_social}</span>
                     <span><strong>Tipo: </strong>{dataItem.representacion}</span>
                     <span><strong>Clave: </strong>{dataItem.clave}</span>
-                    <span><strong>Fecha de última auditoría: </strong>{dataItem.date_ls}</span>
+                    {/* <span><strong>Fecha de última auditoría: </strong>{dataItem.date_ls}</span> */}
                 </CardContent>
-                <CardOverflow
-                    onClick={() => modalHist(dataItem.url_code)}
-                    variant="soft"
-                    color="primary"
-                    sx={{
-                        px: 0.50,
-                        writingMode: 'vertical-rl',
-                        justifyContent: 'center',
-                        fontSize: 'xs',
-                        fontWeight: 'xl',
-                        letterSpacing: '1px',
-                        textTransform: 'uppercase',
-                        borderLeft: '0px solid',
-                        borderColor: 'divider',
-                        cursor: "pointer",
-                    }}
-                >
-                    {"Auditorias :  " + dataItem.noAudito}
-                </CardOverflow>
-
+                {dataItem.socre &&
+                    <CardOverflow
+                        // onClick={() => modalHist(dataItem.url_code)}
+                        variant="soft"
+                        color={  dataItem.socre >= 60 ? "success" : "danger" }  //success warning primary danger neutral
+                        sx={{
+                            px: 0,
+                            writingMode: 'vertical-rl',
+                            justifyContent: 'center',
+                            fontSize: '35px',
+                            fontWeight: 'xl',
+                            letterSpacing: '2px',
+                            textTransform: 'uppercase',
+                            borderLeft: '0px solid',
+                            borderColor: 'divider',
+                            // cursor: "pointer",
+                        }}
+                    >
+                        {/* {"Auditorias :  " + dataItem.socre+" %" } */}
+                        {dataItem.socre + " %"}
+                    </CardOverflow>
+                }
             </Card>
 
             <CardOverflow
@@ -111,7 +150,6 @@ const CardInfo = (props) => {
                     borderColor: 'divider',
                 }}
             >
-
                 <Typography
                     level="title-sm"
                     startDecorator={
@@ -134,7 +172,7 @@ const CardInfo = (props) => {
                         </IconButton>
                     }
                 >
-                    FichaTecnica
+                    Ficha técnica
                 </Typography>
                 <Divider orientation="vertical" />
                 <Typography
@@ -160,14 +198,14 @@ const CardInfo = (props) => {
                         </IconButton>
                     }
                 >
-                    Ver Mapa
+                    Mapa
                 </Typography>
                 <Divider orientation="vertical" />
                 <Typography
                     level="title-sm"
                     startDecorator={
                         <IconButton
-                            onClick={() => onviewGal(dataItem.url_code,'foto')}
+                            onClick={() => onviewGal(dataItem.url_code, 'foto')}
                             size="sm"
                             variant="plain"
                             color="neutral"
@@ -184,14 +222,14 @@ const CardInfo = (props) => {
                             />
                         </IconButton>
                     }>
-                    Galeria
+                    Galería
                 </Typography>
                 <Divider orientation="vertical" />
                 <Typography
                     level="title-sm"
                     startDecorator={
                         <IconButton
-                            onClick={() => onviewGal(dataItem.url_code,'video')}
+                            onClick={() => onviewGal(dataItem.url_code, 'video')}
                             size="sm"
                             variant="plain"
                             color="neutral"

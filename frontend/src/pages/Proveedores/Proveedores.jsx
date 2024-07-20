@@ -42,6 +42,7 @@ const Proveedores = (props) => {
   const [dataItem, setDataItem] = useState([]);
   const [loading, setloading] = useState(false);
 
+  const [noEvaluado, setNoEvaluado] = useState([]);
   const [zona, setZona] = useState([]);
   const [estado, seEstado] = useState([]);
   const [csa, setCsa] = useState([]);
@@ -83,6 +84,7 @@ const Proveedores = (props) => {
         case 200:
           // console.log("data", response.data);
           setDataItem(response.data)
+          setNoEvaluado(response.noEvaluado)
           setZona(response.zona)
           seEstado(response.estado)
           setCsa(response.csa)
@@ -157,7 +159,9 @@ const Proveedores = (props) => {
   const [tabProps, setTabProps] = useState([])
   const [tabCol, setTabCol] = useState([])
   const [tabData, setTabData] = useState([])
+
   const modalHist = async (code) => {
+
     try {
       const response = await DataHistorico(
         setloadingHist,
@@ -166,7 +170,7 @@ const Proveedores = (props) => {
         logoutOptions,
         code
       )
-      // console.log("modalHist", response);
+      console.log("modalHist", response);
       switch (response.status) {
         case 403:
           setloadingHist(false);
@@ -193,7 +197,6 @@ const Proveedores = (props) => {
   }
 
 
-
   //maps
   const [visibleMaps, setVisibleMaps] = useState(false)
   const [create, setCreate] = useState([])
@@ -203,11 +206,11 @@ const Proveedores = (props) => {
   const [arrayMarkInfo, setArrayMarkInfo] = useState([])
   const [arrayMarkProv, setArrayMarkProv] = useState([])
   const onViewMaps = (row) => {
+
     setVisibleMaps(true)
     setLatitud(row.latitude)
     setLongitud(row.longitud)
     setZoom(5)
-    // var markTalls = [row]
     setArrayMarkInfo([row])
   }
   const onViewMapsAll = (dataInfo) => {
@@ -234,6 +237,8 @@ const Proveedores = (props) => {
     console.log('Success:', values)
 
     const newFilter = {
+      noAudito: values.noAudito && values.noAudito,
+
       id_zona: values.id_zona && values.id_zona,
       id_estado: values.id_estado && values.id_estado,
       id_csa_territorio: values.id_csa_territorio && values.id_csa_territorio,
@@ -242,6 +247,9 @@ const Proveedores = (props) => {
       id_grupo: values.id_grupo && values.id_grupo,
       id_distribuidor: values.id_distribuidor && values.id_distribuidor
     }
+
+    values.noAudito === undefined ? delete newFilter.noAudito : values.noAudito.length == 0 && delete newFilter.noAudito
+
     values.id_zona === undefined ? delete newFilter.id_zona : values.id_zona.length == 0 && delete newFilter.id_zona
     values.id_estado === undefined ? delete newFilter.id_estado : values.id_estado.length == 0 && delete newFilter.id_estado
     values.id_csa_territorio === undefined ? delete newFilter.id_csa_territorio : values.id_csa_territorio.length == 0 && delete newFilter.id_csa_territorio
@@ -361,13 +369,17 @@ const Proveedores = (props) => {
           tabData={tabData}
           setTabData={setTabData}
           tabProps={tabProps}
+
+          onviewGal={onviewGal}
+          onViewMaps={onViewMaps}
+
         />
 
         <Grid container spacing={1}>
           <Grid item xs={12}>
             <CardAntd
               style={{ width: '99%' }}
-              title="Evaluación técnica"
+              title="Filtros de consulta"
               extra={
                 <Tooltip title="Actualizar">
                   <IconButton onClick={() => ActualizaTabla()}                  >
@@ -379,6 +391,7 @@ const Proveedores = (props) => {
               }
             >
               <Form
+                // layout="vertical"
                 name="Filtros"
                 size="small"
                 labelCol={{ flex: '40px' }}
@@ -390,10 +403,19 @@ const Proveedores = (props) => {
 
                 <Grid container spacing={1}>
                   <Grid item xs={xs} sm={sm} md={md}>
+                    <Form.Item name="noAudito" label="Evaluaciones" >
+                      <Select
+                        mode="multiple"
+                        placeholder="Por favor seleccione # evaluaciones"
+                        options={noEvaluado}
+                      />
+                    </Form.Item>
+                  </Grid>
+                  <Grid item xs={xs} sm={sm} md={md}>
                     <Form.Item name="id_zona" label="Zona" >
                       <Select
                         mode="multiple"
-                        placeholder="Please select Zona"
+                        placeholder="Por favor seleccione Zona"
                         options={zona}
                       />
                     </Form.Item>
@@ -402,11 +424,11 @@ const Proveedores = (props) => {
                     <Form.Item name="id_estado" label="Estado">
                       <Select
                         mode="multiple"
-                        placeholder="Please select Estado"
+                        placeholder="Por favor seleccione Estado"
                         options={estado}
-                        onBlur={handleBlur}
-                        onSelect={(e) => onActionSelect(e, 'onSelect', "id_estado")}
-                        onDeselect={(e) => onActionSelect(e, 'onDeselect', "id_estado")}
+                      // onBlur={handleBlur}
+                      // onSelect={(e) => onActionSelect(e, 'onSelect', "id_estado")}
+                      // onDeselect={(e) => onActionSelect(e, 'onDeselect', "id_estado")}
 
                       />
                     </Form.Item>
@@ -415,7 +437,7 @@ const Proveedores = (props) => {
                     <Form.Item name="id_csa_territorio" label="CSA">
                       <Select
                         mode="multiple"
-                        placeholder="Please select CSA / Territorio"
+                        placeholder="Por favor seleccione CSA / Territorio"
                         options={csa}
                       />
                     </Form.Item>
@@ -424,7 +446,7 @@ const Proveedores = (props) => {
                     <Form.Item name="id_marca" label="Marca">
                       <Select
                         mode="multiple"
-                        placeholder="Please select Marca"
+                        placeholder="Por favor seleccione Marca"
                         options={marca}
                       />
                     </Form.Item>
@@ -433,7 +455,7 @@ const Proveedores = (props) => {
                     <Form.Item name="id_representacion" label="Tipo">
                       <Select
                         mode="multiple"
-                        placeholder="Please select Tipo"
+                        placeholder="Por favor seleccione Tipo"
                         options={tipo}
                       />
                     </Form.Item>
@@ -442,7 +464,7 @@ const Proveedores = (props) => {
                     <Form.Item name="id_grupo" label="Grupo">
                       <Select
                         mode="multiple"
-                        placeholder="Please select Grupo"
+                        placeholder="Por favor seleccione Grupo"
                         options={grupo}
                       />
                     </Form.Item>
@@ -451,7 +473,7 @@ const Proveedores = (props) => {
                     <Form.Item name="id_distribuidor" label="Distribuidor">
                       <Select
                         mode="multiple"
-                        placeholder="Please select Distribuidor"
+                        placeholder="Por favor seleccione Distribuidor"
                         options={distribuidor}
                       />
                     </Form.Item>
@@ -486,10 +508,10 @@ const Proveedores = (props) => {
 
           <Grid item xs={12}>
             <CardAntd
-              title={'Resultados de la búsqueda'}
+              // title={'Resultados de la búsqueda'}
               extra={
                 <>
-                  <Tooltip title="ubicaciones">
+                  <Tooltip title="Mapa">
                     <IconButton aria-label="settings"
                       onClick={() => onViewMapsAll(FiterData(dataItem, filter))}
                     >
@@ -540,7 +562,7 @@ const Proveedores = (props) => {
 
 
         </Grid>
-      </Box>
+      </Box >
     </>
   );
 };

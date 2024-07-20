@@ -19,14 +19,17 @@ const ModalGaleriaFotos = (props) => {
                     onVisibleChange: (vis) => setVisible(vis),
                 }}
             >
-                {listImageF.map((images, index) =>
-                    <Image
-                        key={(index)}
-                        //with="20"
-                        height={100}
-                        style={{ padding: 5, }}
-                        src={images.evidencia} />
-                )}
+                    {listImageF.map((images, index) =>
+                        <>
+                                <Image
+                                    key={(images.id_evidencia)}
+                                    //with="20"
+                                    height={100}
+                                    style={{ padding: 5, }}
+                                    src={images.evidencia} />
+                                
+                        </>
+                    )}
             </Image.PreviewGroup>
         </div>
     );
@@ -59,7 +62,7 @@ export const ModalGaleriaVideo = (props) => {
 
                                 return (
                                     <ImageListItem key={item.evidencia} cols={cols} rows={rows}>
-                                        <video width="100%" loop controls poster={item.evidencia}>
+                                        <video width="100%" autoPlay loop controls poster={item.evidencia}>
                                             <source src={item.evidencia} type="video/mp4" />
                                         </video>
                                         <ImageListItemBar

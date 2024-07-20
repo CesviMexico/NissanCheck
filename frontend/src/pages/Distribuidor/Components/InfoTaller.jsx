@@ -57,7 +57,7 @@ const InfoTaller = (props) => {
                 variant="outlined"  // outlined  plain  soft solid
                 color="primary"  // primary  neutral  success  warning  danger  info  inverted
                 invertedColors
-                // sx={{ borderRadius: 10 }}
+            // sx={{ borderRadius: 10 }}
 
             // sx={{
             //     width: '100%',
@@ -84,7 +84,7 @@ const InfoTaller = (props) => {
                 </CardOverflow>
                 <CardContent>
                     <Typography fontSize="xl" fontWeight="xl">
-                        IMPERIO AUTOMOTRIZ DE ORIENTE, S.A. DE C.V.
+                        PUERTO PEÑASCO
                     </Typography>
                     <Typography level="body-sm" fontWeight="lg" textColor="text.tertiary">
                         Calz. Ignacio Zaragoza No. 1927, Colonia: Cabeza de Juárez, C.P.: 9227 , Iztapalapa , CDMX

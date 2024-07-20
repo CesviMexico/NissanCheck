@@ -7,14 +7,19 @@ import TablaANTD from "../../../components/Global/TablaComponent";
 import Grid from "@mui/material/Grid";
 
 const ModalHistorico = (props) => {
-    const { visibleHist, setVisibleHist, loadingHist, tabCol, tabData, setTabData, tabProps } = props
+    const { visibleHist, setVisibleHist, loadingHist, tabCol, tabData, setTabData, tabProps, onviewGal, onViewMaps } = props
 
     const OnClickAction = (row, key) => {
         swicthComponentAction[key](row)
     }
     const swicthComponentAction = {
-        Informe: (row) => onViewRes(row)
+        Informe: (row) => onViewRes(row),
+        Galeria: (row) => onviewGal(row.cod_acceso, 'foto'),
+        Videos: (row) => onviewGal(row.cod_acceso, 'video'),
+        Mapa: (row) => onViewMaps(row)
     }
+
+
     const onViewRes = (row) => {
         let code = row.cod_acceso
         window.open('https://appweb.cesvimexico.com.mx/LevInfoCesvi/assets/ScripWeb/reportPDF/PDFEvaluacionBAJAJ.php?code_acces=' + code, '_blank');
@@ -24,7 +29,7 @@ const ModalHistorico = (props) => {
     return (
         <ModdalANTD
             visible={visibleHist}
-            title={"Historial de aditorias"}
+            // title={"Historial de aditorias"}
             footer={false}
             onCancel={() => setVisibleHist(false)}
             width={"75%"}
