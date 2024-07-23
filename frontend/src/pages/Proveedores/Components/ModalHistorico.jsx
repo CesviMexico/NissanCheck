@@ -7,23 +7,23 @@ import TablaANTD from "../../../components/Global/TablaComponent";
 import Grid from "@mui/material/Grid";
 
 const ModalHistorico = (props) => {
-    const { visibleHist, setVisibleHist, loadingHist, tabCol, tabData, setTabData, tabProps, onviewGal, onViewMaps } = props
+    const {onviewFicha, visibleHist, setVisibleHist, loadingHist, tabCol, tabData, setTabData, tabProps, onviewGal, onViewMaps } = props
 
     const OnClickAction = (row, key) => {
         swicthComponentAction[key](row)
     }
     const swicthComponentAction = {
-        Informe: (row) => onViewRes(row),
+        Informe: (row) => onviewFicha(row.cod_acceso),
         Galeria: (row) => onviewGal(row.cod_acceso, 'foto'),
         Videos: (row) => onviewGal(row.cod_acceso, 'video'),
         Mapa: (row) => onViewMaps(row)
     }
 
 
-    const onViewRes = (row) => {
-        let code = row.cod_acceso
-        window.open('https://appweb.cesvimexico.com.mx/LevInfoCesvi/assets/ScripWeb/reportPDF/PDFEvaluacionBAJAJ.php?code_acces=' + code, '_blank');
-    }
+    // const onViewRes = (row) => {
+    //     let code = row.cod_acceso
+    //     window.open('https://appweb.cesvimexico.com.mx/LevInfoCesvi/assets/ScripWeb/reportPDF/PDFEvaluacionBAJAJ.php?code_acces=' + code, '_blank');
+    // }
 
 
     return (

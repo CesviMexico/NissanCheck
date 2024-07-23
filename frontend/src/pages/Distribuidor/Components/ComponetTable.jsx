@@ -10,8 +10,8 @@ const ComponetTable = (props) => {
         <>
             <Table
                 size="small"
-                columns={columns}
-                dataSource={data}
+                columns={columns && columns}
+                dataSource={ data && data}
                 pagination={false}
                 bordered
                 summary={(pageData) => {

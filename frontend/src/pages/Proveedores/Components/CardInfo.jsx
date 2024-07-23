@@ -21,14 +21,14 @@ import { red } from '@mui/material/colors';
 import { Image, Tooltip, } from 'antd';
 
 const CardInfo = (props) => {
-    const { dataItem, onviewGal, modalHist, onViewMaps, fontSize = 25 } = props
+    const { onviewFicha, dataItem, onviewGal, modalHist, onViewMaps, fontSize = 25 } = props
 
     const themeContext = useContext(ThemeContext);
     const { themeGral } = themeContext;
 
-    const onviewFicha = async (code) => {
-        window.open('https://appweb.cesvimexico.com.mx/LevInfoCesvi/assets/ScripWeb/reportPDF/PDFEvaluacionBAJAJ.php?code_acces=' + code, '_blank');
-    }
+    // const onviewFicha = async (code) => {
+    //     window.open('https://appweb.cesvimexico.com.mx/LevInfoCesvi/assets/ScripWeb/reportPDF/PDFEvaluacionBAJAJ.php?code_acces=' + code, '_blank');
+    // }
 
 
     return (

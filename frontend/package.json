@@ -1,7 +1,7 @@
 {
-  "name": "plantilla",
+  "name": "nissancenso",
   "version": "0.1.0",
-  "homepage": "http://appweb.cesvimexico.com.mx/",
+  "homepage": "http://appweb.cesvimexico.com.mx/NissanCenso",
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^5.3.7",

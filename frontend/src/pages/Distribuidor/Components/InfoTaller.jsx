@@ -13,6 +13,17 @@ import { Image } from 'antd';
 
 const InfoTaller = (props) => {
 
+    const {
+        data = {
+            path_img: '',
+            distribuidor: '',
+            full_dir: '',
+            marca: '',
+            representacion: '',
+        }
+    } = props
+
+
     return (
         <Box
             sx={{
@@ -57,20 +68,20 @@ const InfoTaller = (props) => {
                 variant="outlined"  // outlined  plain  soft solid
                 color="primary"  // primary  neutral  success  warning  danger  info  inverted
                 invertedColors
-            // sx={{ borderRadius: 10 }}
+                // sx={{ borderRadius: 10 }}
 
-            // sx={{
-            //     width: '100%',
-            //     flexWrap: 'wrap',
-            //     [`& > *`]: {
-            //         '--stack-point': '500px',
-            //         minWidth:
-            //             'clamp(0px, (calc(var(--stack-point) - 2 * var(--Card-padding) - 2 * var(--variant-borderWidth, 0px)) + 1px - 100%) * 999, 100%)',
-            //     },
-            //     // make the card resizable for demo
-            //     overflow: 'auto',
-            //     resize: 'horizontal',
-            // }}
+                sx={{
+                    width: '100%',
+                    flexWrap: 'wrap',
+                    [`& > *`]: {
+                        '--stack-point': '400px',
+                        minWidth:
+                            'clamp(0px, (calc(var(--stack-point) - 2 * var(--Card-padding) - 2 * var(--variant-borderWidth, 0px)) + 1px - 100%) * 999, 100%)',
+                    },
+                    // make the card resizable for demo
+                    overflow: 'auto',
+                    resize: 'horizontal',
+                }}
             >
                 <CardOverflow>
                     {/* <AspectRatio ratio="1" sx={{ width: 160, borderRadius: 10, }}> */}
@@ -78,16 +89,16 @@ const InfoTaller = (props) => {
                         <Image
                             visible={0}
                             width={'100%'}
-                            src={"https://appweb.cesvimexico.com.mx/LevInfoCesvi/assets/evidencia/1714073566/FRONT_5064850749150929800.jpg"}
+                            src={data.path_img}
                         />
                     </AspectRatio>
                 </CardOverflow>
                 <CardContent>
                     <Typography fontSize="xl" fontWeight="xl">
-                        PUERTO PEÑASCO
+                        {data.distribuidor}
                     </Typography>
                     <Typography level="body-sm" fontWeight="lg" textColor="text.tertiary">
-                        Calz. Ignacio Zaragoza No. 1927, Colonia: Cabeza de Juárez, C.P.: 9227 , Iztapalapa , CDMX
+                        {data.full_dir}
                     </Typography>
                     <Sheet
                         sx={{
@@ -104,19 +115,19 @@ const InfoTaller = (props) => {
                             <Typography level="body-xs" fontWeight="lg">
                                 Distribuidor
                             </Typography>
-                            <Typography fontWeight="lg">SLP SENDERO</Typography>
+                            <Typography fontWeight="lg"> {data.distribuidor}</Typography>
                         </div>
                         <div>
                             <Typography level="body-xs" fontWeight="lg">
                                 Marca
                             </Typography>
-                            <Typography fontWeight="lg">NISSAN</Typography>
+                            <Typography fontWeight="lg"> {data.marca}</Typography>
                         </div>
                         <div>
                             <Typography level="body-xs" fontWeight="lg">
                                 Tipo
                             </Typography>
-                            <Typography fontWeight="lg">Matríz</Typography>
+                            <Typography fontWeight="lg"> {data.representacion}</Typography>
                         </div>
                     </Sheet>
                     {/* <Box sx={{ display: 'flex', gap: 1.5, '& > button': { flex: 1 } }}>

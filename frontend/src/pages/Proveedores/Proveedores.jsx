@@ -5,6 +5,8 @@ import { Icon } from '@iconify/react';
 
 //component Global
 import BadgeMUIImg from '../../components/Global/BadgeComponent'
+import DrawerAntd from '../../components/Global/DrawerComponent'
+import ComponentDistribuidor from '../Distribuidor/ComponentDistribuidor'
 
 
 //MIU
@@ -20,6 +22,7 @@ import { SyncOutlined, } from '@ant-design/icons';
 
 //servicios
 import Data, { DataHistorico, GetGalery } from "./Services";
+import { DataFicha } from "../Distribuidor/Services";
 
 import { ExportToExcel, Uid } from '../../components/Global/funciones'
 
@@ -334,10 +337,73 @@ const Proveedores = (props) => {
   };
 
 
+  const onviewFicha = (code) => {
+    setVisibleFicha(true)
+    if (code) {
+      GetDataFicha(code)
+    }
+  }
+
+  //consulta  de ficha tecnica
+  const [visibleFicha, setVisibleFicha] = useState(false)
+  const [dataFinal, setDataFinal] = useState([])
+  const [loadingFicha, setLoadingFicha] = useState(false);
+
+  const GetDataFicha = async (code) => {
+    try {
+      const response = await DataFicha(
+        setLoadingFicha,
+        msErrorApi,
+        keycloak,
+        logoutOptions,
+        code
+      )
+      console.log("GetDataFicha", response.data);
+
+      switch (response.status) {
+        case 403:
+          setLoadingFicha(false);
+          break;
+
+        case undefined:
+          setLoadingFicha(false);
+          break;
+
+        case 200:
+          setDataFinal(response.data)
+          break;
+
+        default:
+          break;
+      }
+    } catch (error) {
+      setLoadingFicha(false);
+    }
+
+  };
+
+  const onCloseFicha = (code) => {
+    setVisibleFicha(false)
+    setDataFinal([])
+    setLoadingFicha(false)
+  }
+
 
   return (
     <>
       <Box sx={{ display: "flex", flexWrap: "wrap", "& > :not(style)": { m: 1, width: "99%", height: "100%" }, }} >
+
+        <DrawerAntd
+          visible={visibleFicha}
+          onClose={() => onCloseFicha()}
+          width="90%"
+        >
+          <ComponentDistribuidor
+            loading={loadingFicha}
+            data={dataFinal}
+            resultSize={100}
+          />
+        </DrawerAntd>
 
         <ModalGaleriaFotos
           visible={visibleFotos}
@@ -372,6 +438,8 @@ const Proveedores = (props) => {
 
           onviewGal={onviewGal}
           onViewMaps={onViewMaps}
+          onviewFicha={onviewFicha}
+
 
         />
 
@@ -405,6 +473,8 @@ const Proveedores = (props) => {
                   <Grid item xs={xs} sm={sm} md={md}>
                     <Form.Item name="noAudito" label="Evaluaciones" >
                       <Select
+                        key={Uid(1)}
+                        allowClear
                         mode="multiple"
                         placeholder="Por favor seleccione # evaluaciones"
                         options={noEvaluado}
@@ -414,6 +484,8 @@ const Proveedores = (props) => {
                   <Grid item xs={xs} sm={sm} md={md}>
                     <Form.Item name="id_zona" label="Zona" >
                       <Select
+                        key={Uid(2)}
+                        allowClear
                         mode="multiple"
                         placeholder="Por favor seleccione Zona"
                         options={zona}
@@ -423,6 +495,8 @@ const Proveedores = (props) => {
                   <Grid item xs={xs} sm={sm} md={md}>
                     <Form.Item name="id_estado" label="Estado">
                       <Select
+                        key={Uid(3)}
+                        allowClear
                         mode="multiple"
                         placeholder="Por favor seleccione Estado"
                         options={estado}
@@ -436,6 +510,8 @@ const Proveedores = (props) => {
                   <Grid item xs={xs} sm={sm} md={md}>
                     <Form.Item name="id_csa_territorio" label="CSA">
                       <Select
+                        key={Uid(4)}
+                        allowClear
                         mode="multiple"
                         placeholder="Por favor seleccione CSA / Territorio"
                         options={csa}
@@ -445,6 +521,8 @@ const Proveedores = (props) => {
                   <Grid item xs={xs} sm={sm} md={md}>
                     <Form.Item name="id_marca" label="Marca">
                       <Select
+                        key={Uid(5)}
+                        allowClear
                         mode="multiple"
                         placeholder="Por favor seleccione Marca"
                         options={marca}
@@ -454,6 +532,8 @@ const Proveedores = (props) => {
                   <Grid item xs={xs} sm={sm} md={md}>
                     <Form.Item name="id_representacion" label="Tipo">
                       <Select
+                        key={Uid(6)}
+                        allowClear
                         mode="multiple"
                         placeholder="Por favor seleccione Tipo"
                         options={tipo}
@@ -463,6 +543,8 @@ const Proveedores = (props) => {
                   <Grid item xs={xs} sm={sm} md={md}>
                     <Form.Item name="id_grupo" label="Grupo">
                       <Select
+                        key={Uid(7)}
+                        allowClear
                         mode="multiple"
                         placeholder="Por favor seleccione Grupo"
                         options={grupo}
@@ -472,6 +554,8 @@ const Proveedores = (props) => {
                   <Grid item xs={xs} sm={sm} md={md}>
                     <Form.Item name="id_distribuidor" label="Distribuidor">
                       <Select
+                        key={Uid(8)}
+                        allowClear
                         mode="multiple"
                         placeholder="Por favor seleccione Distribuidor"
                         options={distribuidor}
@@ -553,6 +637,7 @@ const Proveedores = (props) => {
                       onviewGal={onviewGal}
                       modalHist={modalHist}
                       onViewMaps={onViewMaps}
+                      onviewFicha={onviewFicha}
                     />
                   </List.Item>
                 }

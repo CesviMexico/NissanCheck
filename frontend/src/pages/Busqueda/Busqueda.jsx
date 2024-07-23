@@ -13,12 +13,16 @@ import { CloseSquareFilled } from '@ant-design/icons';
 //servicios
 import Data from "./Services";
 import { GetGalery } from "../Proveedores/Services";
+import { DataFicha } from "../Distribuidor/Services";
+
 
 //component Global
 import TablaANTD from "../../components/Global/TablaComponent";
 import ModalGaleriaFotos, { ModalGaleriaVideo } from '../Proveedores/Components/ModalGaleria'
 import ModalMaps from '../Proveedores/Components/ModalMaps'
 
+import DrawerAntd from '../../components/Global/DrawerComponent'
+import ComponentDistribuidor from '../Distribuidor/ComponentDistribuidor'
 
 
 const Busqueda = () => {
@@ -76,14 +80,66 @@ const Busqueda = () => {
     swicthComponentAction[key](row)
   }
   const swicthComponentAction = {
-    Informe: (row) => onViewRes(row),
+    Informe: (row) => onViewRes(row.url_code),
     Galeria: (row) => onviewGal(row.url_code, 'foto'),
     Videos: (row) => onviewGal(row.url_code, 'video'),
     Mapa: (row) => onViewMaps(row)
   }
-  const onViewRes = (row) => {
-    let code = row.url_code
-    window.open('https://appweb.cesvimexico.com.mx/LevInfoCesvi/assets/ScripWeb/reportPDF/PDFEvaluacionBAJAJ.php?code_acces=' + code, '_blank');
+  // const onViewRes = (row) => {
+  //   let code = row.url_code
+  //   window.open('https://appweb.cesvimexico.com.mx/LevInfoCesvi/assets/ScripWeb/reportPDF/PDFEvaluacionBAJAJ.php?code_acces=' + code, '_blank');
+  // }
+
+  const onViewRes = (code) => {
+    setVisibleFicha(true)
+    if (code) {
+      GetDataFicha(code)
+    }
+  }
+
+
+  //consulta  de ficha tecnica
+  const [visibleFicha, setVisibleFicha] = useState(false)
+  const [dataFinal, setDataFinal] = useState([])
+  const [loadingFicha, setLoadingFicha] = useState(false);
+
+  const GetDataFicha = async (code) => {
+    try {
+      const response = await DataFicha(
+        setLoadingFicha,
+        msErrorApi,
+        keycloak,
+        logoutOptions,
+        code
+      )
+      console.log("GetDataFicha", response.data);
+
+      switch (response.status) {
+        case 403:
+          setLoadingFicha(false);
+          break;
+
+        case undefined:
+          setLoadingFicha(false);
+          break;
+
+        case 200:
+          setDataFinal(response.data)
+          break;
+
+        default:
+          break;
+      }
+    } catch (error) {
+      setLoadingFicha(false);
+    }
+
+  };
+
+  const onCloseFicha = (code) => {
+    setVisibleFicha(false)
+    setDataFinal([])
+    setLoadingFicha(false)
   }
 
 
@@ -159,8 +215,8 @@ const Busqueda = () => {
     setZoom(5)
     setArrayMarkInfo([row])
   }
-   //inicaliza maps
-   useEffect(() => {
+  //inicaliza maps
+  useEffect(() => {
     setLatitud(19.400352327662368)
     setLongitud(-99.56366303164687)
     setZoom(5)
@@ -171,7 +227,18 @@ const Busqueda = () => {
     <>
       <Box sx={{ display: "flex", flexWrap: "wrap", "& > :not(style)": { m: 1, width: "99%", height: "100%" }, }}>
 
-
+        <DrawerAntd
+          visible={visibleFicha}
+          onClose={() => onCloseFicha()}
+          width="90%"
+        >
+          <ComponentDistribuidor
+            loading={loadingFicha}
+            data={dataFinal}
+            resultSize={100}
+          />
+        </DrawerAntd>
+        
         <ModalGaleriaFotos
           visible={visibleFotos}
           setVisible={setVisibleFotos}
