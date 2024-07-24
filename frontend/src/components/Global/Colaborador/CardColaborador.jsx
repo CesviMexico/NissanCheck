@@ -42,21 +42,24 @@ const CardColaborador = (props) => {
       >
         <AspectRatio flex ratio="0" maxHeight={182} sx={{ minWidth: 182 }}>
           <img
-            src={user.path_foto}
-            srcSet={user.path_foto}
+            src={user.path_img}
+            srcSet={user.path_img}
             loading="lazy"
             alt=""
           />
         </AspectRatio>
         <CardContent>
           <Typography fontSize="xl" fontWeight="lg">
-          {user.nombre}
+          {user.distribuidor}
           </Typography>
           <Typography level="body-sm" fontWeight="lg" textColor="text.tertiary">
-          {user.depto}
+          {user.full_dir}
           </Typography>
           <Typography level="body-sm" fontWeight="lg" textColor="text.tertiary">
-          {user.puesto}
+          {user.name}
+          </Typography>
+          <Typography level="body-sm" fontWeight="lg" textColor="text.tertiary">
+          {user.rol}
           </Typography>
           <Sheet
             sx={{
@@ -71,21 +74,21 @@ const CardColaborador = (props) => {
           >
             <div>
               <Typography level="body-xs" fontWeight="lg">
-                Retardos
+              Distribuidor
               </Typography>
-              <Typography fontWeight="lg">3</Typography>
+              <Typography fontWeight="lg"> {user.distribuidor}</Typography>
             </div>
             <div>
               <Typography level="body-xs" fontWeight="lg">
-                Comidas
+              Marca
               </Typography>
-              <Typography fontWeight="lg">10</Typography>
+              <Typography fontWeight="lg"> {user.marca}</Typography>
             </div>
             <div>
               <Typography level="body-xs" fontWeight="lg">
-                Rating
+              Tipo
               </Typography>
-              <Typography fontWeight="lg">8.9</Typography>
+              <Typography fontWeight="lg"> {user.representacion}</Typography>
             </div>
           </Sheet>
           {/* <Box sx={{ display: 'flex', gap: 1.5, '& > button': { flex: 1 } }}>
@@ -115,7 +118,7 @@ export const GridColaborador = (props) => {
           altHijo={"Editar Perfil"}
           width={90}
           height={90}
-          action={() => console.log("Editar Perfil")}
+          // action={() => console.log("Editar Perfil")}
           src={user.path_foto}
         />
       </Grid>

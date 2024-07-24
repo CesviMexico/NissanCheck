@@ -27,7 +27,7 @@ import bellOutline from "@iconify/icons-mdi/bell-outline";
 import { AvatarMUI } from "../Global/AvatarComponent";
 import BadgeMUIImg from "../Global/BadgeComponent";
 import CloudPlatform from './CloudPlatform'
-import {GridColaborador} from "../Global/Colaborador/CardColaborador";
+import CardColaborador, {GridColaborador} from "../Global/Colaborador/CardColaborador";
 
 //servicios
 import { DataOneUser } from "./Services";
@@ -68,6 +68,7 @@ const HeaderComponent = () => {
     }
   }, [keycloak]);
 
+let userLocal
 
   const DatosPerfil = async (keycloak) => {
     await keycloak.loadUserInfo()
@@ -80,7 +81,8 @@ const HeaderComponent = () => {
       user_info.sub
     );
 
-    // console.log("DatosPerfil", response)
+     console.log("DataOneUser", response[0])
+    
 
     updateUser({
       ...response[0],
@@ -91,9 +93,9 @@ const HeaderComponent = () => {
       email: user_info.email,
       given_name: user_info.given_name,
       family_name: user_info.family_name,
-      name: user_info.name,
+      // name: user_info.name,
       id_company: 1,
-      rol: keycloak.resourceAccess ? keycloak.resourceAccess[process.env.REACT_APP_clientId].roles[0] : null
+      rolkeycloak: keycloak.resourceAccess ? keycloak.resourceAccess[process.env.REACT_APP_clientId].roles[0] : null
     });
 
     setThemeGral({
@@ -184,7 +186,7 @@ const HeaderComponent = () => {
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
             // style={{ right: -100 }}
-            style={{ right: -75 }}
+            style={{ right: -20 }}
           >
             <AvatarMUI
               alt="NameUser"
@@ -212,7 +214,9 @@ const HeaderComponent = () => {
             />
           </IconButton>
         </Tooltip> */}
-        <CloudPlatform />
+
+        {/* <CloudPlatform /> */}
+
       </Box>
       <MenuB
         anchorEl={anchorEl}
@@ -250,7 +254,7 @@ const HeaderComponent = () => {
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
         <Box sx={{ flexGrow: 1 }}>
-          <GridColaborador user={user} />
+          <CardColaborador user={user} />
         </Box>
         <Divider />  <Divider />
 {/* 

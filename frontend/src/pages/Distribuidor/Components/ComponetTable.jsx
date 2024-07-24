@@ -33,9 +33,9 @@ const ComponetTable = (props) => {
                                 style={{ backgroundColor: '#FAFAFA' }}
                             >
                                 <Table.Summary.Cell index={0} align="right">  <Text  strong >{"Total "}</Text> </Table.Summary.Cell>
-                                <Table.Summary.Cell index={1} align="center"> <Text  strong >{totalBorrow}</Text> </Table.Summary.Cell>
-                                <Table.Summary.Cell index={2} align="center"> <Text  strong >{totalRepayment}</Text> </Table.Summary.Cell>
-                                <Table.Summary.Cell index={3} align="center"> <Text  strong >{(totalCumplimiento * 100 / contador).toPrecision(2)} %</Text> </Table.Summary.Cell>
+                                <Table.Summary.Cell index={1} align="center"> <Text  strong >{Math.trunc(totalBorrow)}</Text> </Table.Summary.Cell>
+                                <Table.Summary.Cell index={2} align="center"> <Text  strong >{Math.trunc(totalRepayment)}</Text> </Table.Summary.Cell>
+                                <Table.Summary.Cell index={3} align="center"> <Text  strong >{Math.trunc(((totalRepayment/totalBorrow) * 100 ).toPrecision(4))} %</Text> </Table.Summary.Cell>
 
 
                             </Table.Summary.Row>

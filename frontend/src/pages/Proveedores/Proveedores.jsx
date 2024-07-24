@@ -211,8 +211,8 @@ const Proveedores = (props) => {
   const onViewMaps = (row) => {
 
     setVisibleMaps(true)
-    setLatitud(row.latitude)
-    setLongitud(row.longitud)
+    setLatitud(row.latitud)
+    setLongitud(row.Longitud)
     setZoom(5)
     setArrayMarkInfo([row])
   }
@@ -240,7 +240,7 @@ const Proveedores = (props) => {
     console.log('Success:', values)
 
     const newFilter = {
-      noAudito: values.noAudito && values.noAudito,
+      staAudito: values.staAudito && values.staAudito,
 
       id_zona: values.id_zona && values.id_zona,
       id_estado: values.id_estado && values.id_estado,
@@ -251,7 +251,7 @@ const Proveedores = (props) => {
       id_distribuidor: values.id_distribuidor && values.id_distribuidor
     }
 
-    values.noAudito === undefined ? delete newFilter.noAudito : values.noAudito.length == 0 && delete newFilter.noAudito
+    values.staAudito === undefined ? delete newFilter.staAudito : values.staAudito.length == 0 && delete newFilter.staAudito
 
     values.id_zona === undefined ? delete newFilter.id_zona : values.id_zona.length == 0 && delete newFilter.id_zona
     values.id_estado === undefined ? delete newFilter.id_estado : values.id_estado.length == 0 && delete newFilter.id_estado
@@ -471,12 +471,12 @@ const Proveedores = (props) => {
 
                 <Grid container spacing={1}>
                   <Grid item xs={xs} sm={sm} md={md}>
-                    <Form.Item name="noAudito" label="Evaluaciones" >
+                    <Form.Item name="staAudito" label="Estatus" >
                       <Select
                         key={Uid(1)}
                         allowClear
                         mode="multiple"
-                        placeholder="Por favor seleccione # evaluaciones"
+                        placeholder="Por favor seleccione estatus"
                         options={noEvaluado}
                       />
                     </Form.Item>
@@ -487,7 +487,7 @@ const Proveedores = (props) => {
                         key={Uid(2)}
                         allowClear
                         mode="multiple"
-                        placeholder="Por favor seleccione Zona"
+                        placeholder="Por favor seleccione zona"
                         options={zona}
                       />
                     </Form.Item>
@@ -498,7 +498,7 @@ const Proveedores = (props) => {
                         key={Uid(3)}
                         allowClear
                         mode="multiple"
-                        placeholder="Por favor seleccione Estado"
+                        placeholder="Por favor seleccione estado"
                         options={estado}
                       // onBlur={handleBlur}
                       // onSelect={(e) => onActionSelect(e, 'onSelect', "id_estado")}
@@ -513,7 +513,7 @@ const Proveedores = (props) => {
                         key={Uid(4)}
                         allowClear
                         mode="multiple"
-                        placeholder="Por favor seleccione CSA / Territorio"
+                        placeholder="Por favor seleccione csa/territorio"
                         options={csa}
                       />
                     </Form.Item>
@@ -524,7 +524,7 @@ const Proveedores = (props) => {
                         key={Uid(5)}
                         allowClear
                         mode="multiple"
-                        placeholder="Por favor seleccione Marca"
+                        placeholder="Por favor seleccione marca"
                         options={marca}
                       />
                     </Form.Item>
@@ -535,7 +535,7 @@ const Proveedores = (props) => {
                         key={Uid(6)}
                         allowClear
                         mode="multiple"
-                        placeholder="Por favor seleccione Tipo"
+                        placeholder="Por favor seleccione tipo"
                         options={tipo}
                       />
                     </Form.Item>
@@ -546,7 +546,7 @@ const Proveedores = (props) => {
                         key={Uid(7)}
                         allowClear
                         mode="multiple"
-                        placeholder="Por favor seleccione Grupo"
+                        placeholder="Por favor seleccione grupo"
                         options={grupo}
                       />
                     </Form.Item>
@@ -557,7 +557,7 @@ const Proveedores = (props) => {
                         key={Uid(8)}
                         allowClear
                         mode="multiple"
-                        placeholder="Por favor seleccione Distribuidor"
+                        placeholder="Por favor seleccione distribuidor"
                         options={distribuidor}
                       />
                     </Form.Item>

@@ -62,7 +62,7 @@ export const ModalGaleriaVideo = (props) => {
 
                                 return (
                                     <ImageListItem key={item.evidencia} cols={cols} rows={rows}>
-                                        <video width="100%" autoPlay loop controls poster={item.evidencia}>
+                                        <video width="100%" loop controls poster={"https://www.svgrepo.com/show/421070/play-video-youtube.svg"}>
                                             <source src={item.evidencia} type="video/mp4" />
                                         </video>
                                         <ImageListItemBar

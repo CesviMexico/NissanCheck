@@ -37,20 +37,20 @@ function Map({ markerPosition, olat, olng, direccion_origen, markerPositionGRAL,
       let arra = []
       if(arrayMarkas !== null){
         arrayMarkas.map(function(taller) {
-          if (taller.latitude !== 'No hay datos') {
-            var marca = [taller.latitude,taller.longitud]
-            var popup_html = '<div style="width="500px"; height="300px"> <h5>'+taller.distribuidor +'</h5><p><a href="https://appweb.cesvimexico.com.mx/LevInfoCesvi/assets/ScripWeb/reportPDF/PDFEvaluacionBAJAJ.php?code_acces='+ taller.url_code +'" target="_blank">Ficha técnica</a></p> <iframe src="https://www.google.com/maps/embed/v1/streetview?location='+ marca[0] + ',' +  marca[1]+'&fov=80&heading=70&pitch=0&key=AIzaSyDy9_oujjehBZLM-MTMic1FY0BzQimmZoQ" width="250" height="250" ></iframe></div>';
+          if (taller.latitud !== 'No hay datos') {
+            var marca = [taller.latitud,taller.Longitud]
+            var popup_html = '<div style="width="500px"; height="300px"> <h5>'+taller.distribuidor +'</h5><p><a href="https://appweb.cesvimexico.com.mx/LevInfoCesvi/assets/ScripWeb/reportPDF/PDFEvaluacionBAJAJ.php?code_acces='+ taller.cod_acceso +'" target="_blank">Ficha técnica</a></p> <iframe src="https://www.google.com/maps/embed/v1/streetview?location='+ marca[0] + ',' +  marca[1]+'&fov=80&heading=70&pitch=0&key=AIzaSyDy9_oujjehBZLM-MTMic1FY0BzQimmZoQ" width="250" height="250" ></iframe></div>';
             // var popup_html = '<div style="width="500px"; height="300px"> <h5>'+taller.razon_social +'</h5><p><a href="https://appweb.cesvimexico.com.mx/LevInfoCesvi/assets/ScripWeb/reportPDF/PDFEvaluacionBAJAJ.php?code_acces='+ taller.url_code +'" target="_blank">ficha tecnica</a></p> <iframe src="https://www.google.com/maps/embed/v1/streetview?location='+ marca[0] + ',' +  marca[1]+'&fov=80&heading=70&pitch=0&key=xxxxxx" width="250" height="250" ></iframe></div>';
-            if (taller.cumplimiento == 'PLATINO') {
-              var colorIcon = 'marker_platino.png'
-            }else if(taller.cumplimiento == 'ORO'){
-              var colorIcon = 'marker_oro.png'
-            }else if(taller.cumplimiento == 'PLATA'){
-              var colorIcon = 'marker_plata.png'
-            }else if(taller.cumplimiento == 'BASICO'){
-              var colorIcon = 'marker_turquesa.png'
-            }else if(taller.cumplimiento == 'No evaluado'){
+            if (taller.idRepresentacion == '1') {
               var colorIcon = 'marker_carmin.png'
+            }else if(taller.idRepresentacion == '2'){
+              var colorIcon = 'marker_oro.png'
+            }else if(taller.idRepresentacion == '3'){
+              var colorIcon = 'marker_plata.png'
+            }else if(taller.idRepresentacion == '4'){
+              var colorIcon = 'marker_turquesa.png'
+            }else if(taller.idRepresentacion == '5'){
+              var colorIcon = 'marker_platino.png'
             }
             var Icon = L.icon({
               iconUrl: currenturlapi + colorIcon,

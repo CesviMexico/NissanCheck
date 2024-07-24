@@ -17,6 +17,8 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Avatar from '@mui/material/Avatar';
 import { red } from '@mui/material/colors';
 
+import BadgeMUIImg from '../../../components/Global/BadgeComponent'
+
 
 import { Image, Tooltip, } from 'antd';
 
@@ -24,7 +26,7 @@ const CardInfo = (props) => {
     const { onviewFicha, dataItem, onviewGal, modalHist, onViewMaps, fontSize = 25 } = props
 
     const themeContext = useContext(ThemeContext);
-    const { themeGral } = themeContext;
+    const { themeGral,colorBadge } = themeContext;
 
     // const onviewFicha = async (code) => {
     //     window.open('https://appweb.cesvimexico.com.mx/LevInfoCesvi/assets/ScripWeb/reportPDF/PDFEvaluacionBAJAJ.php?code_acces=' + code, '_blank');
@@ -46,13 +48,22 @@ const CardInfo = (props) => {
                             color="neutral"
                             sx={{ ml: 'auto', alignSelf: 'flex-start', mt: -0.5, mb: -1, mr: -2 }}
                         >
-                            <Icon icon={"fluent:document-text-clock-20-regular"}
+                            {/* <Icon icon={"fluent:document-text-clock-20-regular"}
                                 style={{
                                     cursor: "pointer",
                                     fontSize: fontSize + 3,
                                     // marginLeft: "5px",
                                     color: themeGral.header_colorIconMenu
                                 }}
+                            /> */}
+
+                            <BadgeMUIImg
+                                sizeIcon={themeGral.table_sizeIcon}
+                                icon={"fluent:document-text-clock-20-regular"}
+                                badgeContent={dataItem.noAudito }
+                                max={9999}
+                                colorIcon={themeGral.header_colorIconMenu}
+                                colorBadge={themeGral.header_colorIconMenu}
                             />
                         </IconButton>
                     </Tooltip>
@@ -118,7 +129,7 @@ const CardInfo = (props) => {
                     <CardOverflow
                         // onClick={() => modalHist(dataItem.url_code)}
                         variant="soft"
-                        color={  dataItem.socre >= 60 ? "success" : "danger" }  //success warning primary danger neutral
+                        color={dataItem.socre >= 60 ? "success" : "danger"}  //success warning primary danger neutral
                         sx={{
                             px: 0,
                             writingMode: 'vertical-rl',

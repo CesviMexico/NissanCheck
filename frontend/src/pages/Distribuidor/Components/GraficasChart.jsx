@@ -1,8 +1,6 @@
 
 import React from "react";
-//componentes ejemplo
 import BarChart, { PastelChart, LineChart,RadarChart } from '../../../components/Global/GraficasComponent'
-import { faker } from '@faker-js/faker';
 
 const GraficaBarras = (props) => {
     const { labels = [], datasets = [], } = props

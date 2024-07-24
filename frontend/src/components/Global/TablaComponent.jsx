@@ -453,9 +453,9 @@ const TablaANTD = (props) => {
           size={Number(size)}
           key={Uid()}
           src={row[nameUrl]}
-          style={{
-            backgroundColor: themeGral.table_color,
-          }}
+          // style={{
+          //   backgroundColor: themeGral.table_color,
+          // }}
         >
           {row[nameTexShow]}
         </Avatar>
