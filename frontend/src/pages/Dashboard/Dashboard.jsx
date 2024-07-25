@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useContext, } from "react";
 
 //MIU
 import Grid from "@mui/material/Grid";
@@ -9,13 +9,13 @@ import CardCover from '@mui/joy/CardCover';
 import CardContent from '@mui/joy/CardContent';
 import Typography from '@mui/joy/Typography';
 
+import UserContext from "../../context/UserContext";
+
 
 const Dashboard = (props) => {
 
-  // useEffect(() => {
-  //   console.log("prueba")
-  // }, [])
-
+  const userContext = useContext(UserContext);
+  const { user } = userContext;
 
   return (
     <>
@@ -27,24 +27,41 @@ const Dashboard = (props) => {
         }}
       >
         <Grid container spacing={1}>
-          <Card 
-          component="li" 
-          sx={{ minWidth: "100%", flexGrow: 1  ,  height: "100%" }}
-         
+          <Card
+            component="li"
+            sx={{ minWidth: "100%", flexGrow: 1, height: "100%" }}
+
           >
-            <CardCover>
-              <video
-                autoPlay
-                loop
-                muted
-                poster="https://assets.codepen.io/6093409/river.jpg"
-              >
-                <source
-                  src="https://video.wixstatic.com/video/7822f6_e1fa3a37664a47678e1bde1fa1283209/720p/mp4/file.mp4"
-                  type="video/mp4"
-                />
-              </video>
-            </CardCover>
+
+            {
+              user.id_company === 2 &&
+              <CardCover>
+                <video
+                  autoPlay
+                  loop
+                  muted
+                  poster="https://assets.codepen.io/6093409/river.jpg"
+                >
+                  <source src={"https://videos.nissan-cdn.net/nissan/es-MX/videos/nissan-2023-esto_es_nissan-nissan_master_video_back_wide-d.mp4"} type="video/mp4" />
+
+                </video>
+              </CardCover>
+            }
+            {
+              user.id_company === 1 &&
+              <CardCover>
+                <video
+                  autoPlay
+                  loop
+                  muted
+                  poster="https://assets.codepen.io/6093409/river.jpg"
+                >
+                  <source src={"https://video.wixstatic.com/video/7822f6_e1fa3a37664a47678e1bde1fa1283209/720p/mp4/file.mp4"} type="video/mp4" />
+
+                </video>
+              </CardCover>
+            }
+
             <CardContent>
               <Typography
                 level="body-lg"
@@ -52,7 +69,7 @@ const Dashboard = (props) => {
                 textColor="#fff"
                 mt={{ xs: 12, sm: 18 }}
                 style={{ width: "80%", height: "260px" }}
-              >                
+              >
               </Typography>
             </CardContent>
           </Card>

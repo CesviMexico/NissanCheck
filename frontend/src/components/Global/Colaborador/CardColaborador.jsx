@@ -12,10 +12,10 @@ import Grid from "@mui/material/Grid";
 import accountEdit from "@iconify/icons-mdi/account-edit";
 
 //componentes
-import AvatarMUIIcon from "../AvatarComponent";
+import AvatarMUIIcon, { AvatarANTD } from "../AvatarComponent";
 
 const CardColaborador = (props) => {
-  const {user, orientation="horizontal"}= props
+  const { user, orientation = "horizontal" } = props
 
   return (
     <Box
@@ -24,7 +24,7 @@ const CardColaborador = (props) => {
         position: 'relative',
         overflow: { xs: 'auto', sm: 'initial' },
       }}    >
-     
+
       <Card
         orientation={orientation}
         sx={{
@@ -37,7 +37,7 @@ const CardColaborador = (props) => {
           },
           // make the card resizable for demo
           overflow: 'auto',
-          resize: {orientation},
+          resize: { orientation },
         }}
       >
         <AspectRatio flex ratio="0" maxHeight={182} sx={{ minWidth: 182 }}>
@@ -50,16 +50,16 @@ const CardColaborador = (props) => {
         </AspectRatio>
         <CardContent>
           <Typography fontSize="xl" fontWeight="lg">
-          {user.distribuidor}
+            {user.distribuidor}
           </Typography>
           <Typography level="body-sm" fontWeight="lg" textColor="text.tertiary">
-          {user.full_dir}
+            {user.full_dir}
           </Typography>
           <Typography level="body-sm" fontWeight="lg" textColor="text.tertiary">
-          {user.name}
+            {user.name}
           </Typography>
           <Typography level="body-sm" fontWeight="lg" textColor="text.tertiary">
-          {user.rol}
+            {user.rol}
           </Typography>
           <Sheet
             sx={{
@@ -74,19 +74,19 @@ const CardColaborador = (props) => {
           >
             <div>
               <Typography level="body-xs" fontWeight="lg">
-              Distribuidor
+                Distribuidor
               </Typography>
               <Typography fontWeight="lg"> {user.distribuidor}</Typography>
             </div>
             <div>
               <Typography level="body-xs" fontWeight="lg">
-              Marca
+                Marca
               </Typography>
               <Typography fontWeight="lg"> {user.marca}</Typography>
             </div>
             <div>
               <Typography level="body-xs" fontWeight="lg">
-              Tipo
+                Tipo
               </Typography>
               <Typography fontWeight="lg"> {user.representacion}</Typography>
             </div>
@@ -107,45 +107,38 @@ const CardColaborador = (props) => {
 
 export const GridColaborador = (props) => {
 
-  const {user}= props
+  const { user } = props
 
   return (
     <Grid align="center" sx={{ width: 280 }}>
       <Grid item>
-        <AvatarMUIIcon
+        <AvatarANTD
           iconHijo={accountEdit}
           sizeHijo={"38px"}
           altHijo={"Editar Perfil"}
-          width={90}
-          height={90}
+          width={190}
+          height={190}
           // action={() => console.log("Editar Perfil")}
           src={user.path_foto}
         />
       </Grid>
       <Grid item>
         <Typography variant="h6" component="div" gutterBottom>
-          {user.nombre}
-        </Typography>
-      </Grid>
-      <Grid item>
-        <Typography variant="caption" display="block" gutterBottom>
-          {user.nivel_puesto}
-        </Typography>
-      </Grid>
-      <Grid item>
-        <Typography variant="caption" display="block" gutterBottom>
-          {user.email}
+          {user.name}
         </Typography>
       </Grid>
       <Grid item>
         <Typography variant="caption" display="block" gutterBottom>
           {user.rol}
+        </Typography><br/>
+      </Grid>
+      <Grid item>
+        <Typography variant="caption" color="primary" gutterBottom noWrap >
+          {user.company}
         </Typography>
       </Grid>
       <Grid item>
-        <Typography variant="caption" display="block" gutterBottom>
-          {user.cve_empleado}
-        </Typography>
+        <Typography gutterBottom  /><br/>
       </Grid>
     </Grid>
   );

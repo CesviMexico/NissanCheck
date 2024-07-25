@@ -22,6 +22,8 @@ import Page403 from "./pages/Page403";
 import Proveedores from "./pages/Proveedores/Proveedores";
 import Busqueda from "./pages/Busqueda/Busqueda";
 import Distribuidor from "./pages/Distribuidor/Distribuidor";
+import Ficha from "./pages/Distribuidor/Ficha";
+
 
 
 import { Spin } from "antd";
@@ -54,6 +56,7 @@ const Router = () => {
           <Route path="Modelo/Busqueda" element={<PrivateRoute><Layout><Busqueda /></Layout></PrivateRoute>} />
           <Route path="Modelo/Distribuidor" element={<PrivateRoute><Layout><Distribuidor /></Layout></PrivateRoute>} />
 
+          <Route path="Modelo/Ficha/:id" element={<PrivateRoute><Ficha /></PrivateRoute>} />
 
           <Route path="/Page403" element={<PrivateRoute><Page403 /> </PrivateRoute>} />
           <Route path="/Page404" element={<PrivateRoute><Layout><Page404 /></Layout> </PrivateRoute>} />

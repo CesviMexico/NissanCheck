@@ -19,6 +19,10 @@ import FooterComponent from '../Layout/Footer'
 import logo from '../../assets/images/lcesvimexico.svg'
 import logoSvg from '../../assets/images/logo.svg'
 
+// import LogoNISSAN4 from '../../assets/images/LogoNISSAN4.png'
+// import LogoNISSAN3 from '../../assets/images/LogoNISSAN3.png'
+
+
 //servicios
 import { DataMenu } from "./Services";
 

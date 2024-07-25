@@ -217,10 +217,12 @@ const Proveedores = (props) => {
     setArrayMarkInfo([row])
   }
   const onViewMapsAll = (dataInfo) => {
+
     setVisibleMaps(true)
     setCreate('null')
-    setArrayMarkInfo(dataInfo)
+    setArrayMarkInfo(dataInfo.filter(row => row.latitud != null))
     setZoom(5)
+
   }
 
 
@@ -387,6 +389,7 @@ const Proveedores = (props) => {
     setDataFinal([])
     setLoadingFicha(false)
   }
+
 
 
   return (

@@ -25,16 +25,13 @@ import ModalGaleriaFotos, { ModalGaleriaVideo } from '../Proveedores/Components/
 import ModalMaps from '../Proveedores/Components/ModalMaps'
 
 
-
-const Busqueda = () => {
+const Distribuidor = () => {
 
   const themeContext = useContext(ThemeContext);
   const userContext = useContext(UserContext);
   const { keycloak } = useKeycloak();
   const { msErrorApi, logoutOptions, } = themeContext;
-
   const { user } = userContext;
-
 
   const [data, setData] = useState([])
   const [options, setOptions] = useState([])
@@ -274,10 +271,9 @@ const Busqueda = () => {
   }, []);
 
   useEffect(() => {
-    user.id_rol === 3 &&  modalHist(user.url_code)
+    user.id_rol === 3 && modalHist(user.url_code)
     user.id_rol === 3 && setValueSelect(user.distribuidor)
   }, [user.id_rol]);
-
 
 
   return (
@@ -384,4 +380,4 @@ const Busqueda = () => {
 };
 
 
-export default Busqueda;
+export default Distribuidor;

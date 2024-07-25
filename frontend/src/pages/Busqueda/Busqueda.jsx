@@ -47,7 +47,7 @@ const Busqueda = () => {
         keycloak,
         logoutOptions,
       )
-      // console.log("Busqueda", response);
+      console.log("Busqueda", response.data);
 
       switch (response.status) {
         case 403:
@@ -210,8 +210,8 @@ const Busqueda = () => {
   const [arrayMarkProv, setArrayMarkProv] = useState([])
   const onViewMaps = (row) => {
     setVisibleMaps(true)
-    setLatitud(row.latitude)
-    setLongitud(row.longitud)
+    setLatitud(row.latitud)
+    setLongitud(row.Longitud)
     setZoom(5)
     setArrayMarkInfo([row])
   }

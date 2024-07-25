@@ -216,13 +216,13 @@ export const getAxiosLumen = async (propX) => {
 }
 
 export const getAxiosLumenFree = async (propX) => {
-  const { uri, setloading, msErrorApi,  notification, parametros, request, logoutOptions } = propX;
+  const { uri, setloading, msErrorApi, notification, parametros, request, logoutOptions } = propX;
   setloading && setloading(true)
- 
+
   try {
- 
+
     let response
- 
+
     switch (request) {
       case 'get':
       case 'delete':
@@ -237,57 +237,57 @@ export const getAxiosLumenFree = async (propX) => {
         response = await clienteAxios[request](
           uri,
           CryptoJSAesEncrypt(parametros),
-         
+
         );
         break;
       default:
         break;
     }
- 
+
     let dataResponse;
- 
- 
-   
+
+
+
     let responseDes1 = deCryptoJSAesEncrypt(response.data)
     let responseDes = responseDes1.split('\r\n\r\n')
     responseDes = JSON.parse("[" + responseDes[1] + "]")
     dataResponse = { ...responseDes[0] }
- 
-   
+
+
     notification && NotificationMessageANTD({
       type: dataResponse.type,
       texto: dataResponse.message,
       tipoComponent: dataResponse.tipoComponent,
     })
- 
+
     setloading && setloading(false)
- 
+
     switch (dataResponse.status) {
       case 200:
       case 201:
         return dataResponse
         break;
       case 401:
-     
- 
+
+
         break;
- 
+
       default:
         break;
     }
- 
- 
+
+
   } catch (error) {
- 
+
     NotificationMessageANTD({
       type: 'error',
       texto: msErrorApi,
       tipoComponent: 'notification',
     })
- 
+
     setloading && setloading(false)
     return []
- 
+
   }
 }
 // formato de con comas para numeros
@@ -389,5 +389,12 @@ export const disableDateRangesDatepiker = (range = { startDate: false, endDate: 
     return (startDate && startCheck) || (endDate && endCheck);
   };
 }
+
+export function cadenacaracter(str, caracter) {
+  let posicion = str.indexOf(caracter);
+  let newCadean = str.substring(0, posicion);
+  return newCadean;
+}
+
 
 export default separator;

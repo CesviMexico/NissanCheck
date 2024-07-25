@@ -27,7 +27,7 @@ import bellOutline from "@iconify/icons-mdi/bell-outline";
 import { AvatarMUI } from "../Global/AvatarComponent";
 import BadgeMUIImg from "../Global/BadgeComponent";
 import CloudPlatform from './CloudPlatform'
-import CardColaborador, {GridColaborador} from "../Global/Colaborador/CardColaborador";
+import CardColaborador, { GridColaborador } from "../Global/Colaborador/CardColaborador";
 
 //servicios
 import { DataOneUser } from "./Services";
@@ -68,7 +68,7 @@ const HeaderComponent = () => {
     }
   }, [keycloak]);
 
-let userLocal
+  let userLocal
 
   const DatosPerfil = async (keycloak) => {
     await keycloak.loadUserInfo()
@@ -81,12 +81,12 @@ let userLocal
       user_info.sub
     );
 
-     console.log("DataOneUser", response[0])
-    
+    console.log("DataOneUser", response[0])
+
 
     updateUser({
       ...response[0],
-      path_foto:response[0].path_foto,
+      path_foto: response[0].path_foto,
       id_modulo: process.env.REACT_APP_Modulo,
       id_keycloak: user_info.sub,
       preferred_username: user_info.preferred_username,
@@ -94,7 +94,7 @@ let userLocal
       given_name: user_info.given_name,
       family_name: user_info.family_name,
       // name: user_info.name,
-      id_company: 1,
+      // id_company: 1,
       rolkeycloak: keycloak.resourceAccess ? keycloak.resourceAccess[process.env.REACT_APP_clientId].roles[0] : null
     });
 
@@ -169,7 +169,7 @@ let userLocal
 
       <Typography
         variant="h6"
-        
+
         color={themeGral.header_color_text}
         style={{ top: 15, position: "relative", float: "left" }}
       >
@@ -254,10 +254,17 @@ let userLocal
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
         <Box sx={{ flexGrow: 1 }}>
-          <CardColaborador user={user} />
+          {
+            user.id_rol === 3 ?
+              <CardColaborador user={user} />
+              :
+              <GridColaborador user={user} />
+          }
         </Box>
+
+
         <Divider />  <Divider />
-{/* 
+        {/* 
         <MenuItemB>
           <ListItemIcon>
             <Icon
