@@ -81,7 +81,6 @@ const HeaderComponent = () => {
       user_info.sub
     );
 
-    console.log("DataOneUser", response[0])
 
 
     updateUser({

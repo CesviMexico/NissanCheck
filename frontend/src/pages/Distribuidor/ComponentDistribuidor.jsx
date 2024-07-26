@@ -1,19 +1,16 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useContext, } from "react";
 import ThemeContext from "../../context/ThemContext";
-import { useKeycloak } from "@react-keycloak/web";
 import { Icon } from '@iconify/react';
 
 //MIU
 import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
 import { styled } from '@mui/material/styles';
 import LinearProgress from '@mui/joy/LinearProgress';
 
 //ANT
 import { Card as CardAntd, Result } from 'antd';
-import { SmileOutlined } from '@ant-design/icons';
 
-import ComponentCard, { CongratCard } from './Components/ComponentCard'
+import ComponentCard from './Components/ComponentCard'
 import ComponenLista from './Components/ComponentLista'
 import ComponetTable from './Components/ComponetTable'
 import InfoTaller from './Components/InfoTaller'
@@ -22,16 +19,14 @@ import { GraficaRadar } from './Components/GraficasChart';
 
 const ComponentDistribuidor = (props) => {
 
-    const { loading, setloading, data, resultSize = 200 } = props
-
+    const { loading, data, resultSize = 200 } = props
 
     const themeContext = useContext(ThemeContext);
-    const { keycloak } = useKeycloak();
-    const { msErrorApi, logoutOptions, themeGral } = themeContext;
+    const { themeGral } = themeContext;
+
     const gridStyle50 = { width: '50%', }
     const gridStyle25 = { width: '50%', textAlign: 'center', }
     const gridStyle75 = { width: '50%', textAlign: 'center', }
-    const gridStyle100 = { width: '100%' }
 
     const Img = styled('img')({
         margin: 'auto',
@@ -41,7 +36,6 @@ const ComponentDistribuidor = (props) => {
 
     return (
         <>
-            {/* <Box sx={{ display: "flex", flexWrap: "wrap", "& > :not(style)": { m: 1, width: "99%", height: "100%" }, }}> */}
             <LinearProgress
                 color="primary"
                 determinate={!loading}
@@ -49,7 +43,7 @@ const ComponentDistribuidor = (props) => {
                 variant="plain"
             />
             <Grid container spacing={1}
-                  sx={{  border: 0, mt: -4  }}
+                sx={{ border: 0, mt: -4 }}
             >
                 {data.title ?
 
@@ -164,7 +158,6 @@ const ComponentDistribuidor = (props) => {
                     </Grid>
                 }
             </Grid>
-            {/* </Box> */}
         </>
     );
 };

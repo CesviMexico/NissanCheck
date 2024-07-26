@@ -120,7 +120,6 @@ const Home = () => {
     setTablePropsDetalle(response.props_table);
     setFormTablePropsDetalle(response.formItems);
 
-    ////console.log("DetalleComponentes", response);
 
     setRowForms(row);
     chCurrentRowIDAction(row.forms_id);
@@ -143,7 +142,6 @@ const Home = () => {
       dfi
     );
 
-    ////console.log("TablaAtributos", response);
     setDataSourceAttributes(response.data);
     setColumnsAttributes(response.columns);
 
@@ -152,7 +150,6 @@ const Home = () => {
       onInputAttribute(row, undefined, row.defaultValue);
     });
     setNewcomponentHook(newcomponent);
-    ////console.log("newcomponent", newcomponent)
 
     setlLoadingAtributos(false);
   };
@@ -180,7 +177,6 @@ const Home = () => {
       component: newcomponentFin,
     };
 
-    ////console.log("parameters", parameters);
     await AddElementForm(
       setloadingDetalle,
       msErrorApi,
@@ -205,8 +201,8 @@ const Home = () => {
   };
 
   const [selectform, setSelectForm] = useState(false);
-  const [parent, setParent] = useState(null);
-  const [reutilizable, setReutilizable] = useState();
+  // const [parent, setParent] = useState(null);
+  // const [reutilizable, setReutilizable] = useState();
   const [combos, setCombos] = useState([]);
 
   const CombosSelect = async () => {
@@ -275,7 +271,6 @@ const Home = () => {
       );
     }
     newcomponent.push(attribute)
-    //console.log(newcomponent);
   };
 
   return (

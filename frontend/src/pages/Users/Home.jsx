@@ -67,7 +67,6 @@ const Home = () => {
   useEffect(() => { ActualizaTabla() }, []);
 
   const swicthComponentAction = {
-    // Eliminar: (row) => onEliminarRow(row),
     Editar: (row) => onEditarRow(row),
     Permisos: (row) => NewPermission(row),
   };
@@ -90,7 +89,6 @@ const Home = () => {
           break;
 
         case 200:
-          console.log("USUARIOS", response.data);
 
           setDataSource(response.data)
           setColumns(response.columns)
@@ -114,14 +112,10 @@ const Home = () => {
 
   const [form] = Form.useForm();
   const onEditarRow = (row) => {
-    //console.log("onEditarRow", row)
-
     form.resetFields()
     form.setFieldsValue(row);
-
     setId_user(row.id_user)
     setVisible(true)
-
   };
 
 
@@ -179,8 +173,6 @@ const Home = () => {
         }
 
       )
-      ////console.log("VerMenuPermissions", response)
-
       switch (response.status) {
         case 403:
           setloadingModulo(false);
@@ -235,7 +227,6 @@ const Home = () => {
           id_modulo: id_modulo,
         }
       )
-      ////console.log("onChangeChecked", response)
       switch (response.status) {
         case 403:
           setloadingChecked(false);

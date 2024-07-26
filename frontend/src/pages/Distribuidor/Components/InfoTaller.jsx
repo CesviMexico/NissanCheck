@@ -1,7 +1,6 @@
 import * as React from 'react';
 import AspectRatio from '@mui/joy/AspectRatio';
 import Box from '@mui/joy/Box';
-import Button from '@mui/joy/Button';
 import Card from '@mui/joy/Card';
 import CardContent from '@mui/joy/CardContent';
 import Typography from '@mui/joy/Typography';
@@ -32,37 +31,6 @@ const InfoTaller = (props) => {
                 overflow: { xs: 'auto', sm: 'initial' },
             }}
         >
-            <Box
-                sx={{
-                    // position: 'absolute',
-                    // display: 'block',
-                    // width: '1px',
-                    // bgcolor: 'warning.300',
-                    // left: '500px',
-                    // top: '-24px',
-                    // bottom: '-24px',
-                    // '&::before': {
-                    //     top: '4px',
-                    //     content: '"vertical"',
-                    //     display: 'block',
-                    //     position: 'absolute',
-                    //     right: '0.5rem',
-                    //     color: 'text.tertiary',
-                    //     fontSize: 'sm',
-                    //     fontWeight: 'lg',
-                    // },
-                    // '&::after': {
-                    //     top: '4px',
-                    //     content: '"horizontal"',
-                    //     display: 'block',
-                    //     position: 'absolute',
-                    //     left: '0.5rem',
-                    //     color: 'text.tertiary',
-                    //     fontSize: 'sm',
-                    //     fontWeight: 'lg',
-                    // },
-                }}
-            />
             <Card
                 orientation="horizontal"
                 variant="outlined"  // outlined  plain  soft solid
@@ -84,7 +52,6 @@ const InfoTaller = (props) => {
                 }}
             >
                 <CardOverflow>
-                    {/* <AspectRatio ratio="1" sx={{ width: 160, borderRadius: 10, }}> */}
                     <AspectRatio flex ratio="1" maxHeight={190} sx={{ minWidth: 190 }}>
                         <Image
                             visible={0}
@@ -130,14 +97,6 @@ const InfoTaller = (props) => {
                             <Typography fontWeight="lg"> {data.representacion}</Typography>
                         </div>
                     </Sheet>
-                    {/* <Box sx={{ display: 'flex', gap: 1.5, '& > button': { flex: 1 } }}>
-                        <Button variant="outlined" color="neutral">
-                            Chat
-                        </Button>
-                        <Button variant="solid" color="primary">
-                            Follow
-                        </Button>
-                    </Box> */}
                 </CardContent>
             </Card>
         </Box>

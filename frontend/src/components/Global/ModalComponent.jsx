@@ -26,7 +26,7 @@ const ModdalMUI = (props) => {
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"))
 
   const onFinish = (values) => {
-    console.log(values)
+    
   };
 
 

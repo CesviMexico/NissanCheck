@@ -118,7 +118,6 @@ export const GridColaborador = (props) => {
           altHijo={"Editar Perfil"}
           width={190}
           height={190}
-          // action={() => console.log("Editar Perfil")}
           src={user.path_foto}
         />
       </Grid>

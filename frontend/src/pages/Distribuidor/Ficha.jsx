@@ -28,7 +28,6 @@ const Ficha = () => {
   const userContext = useContext(UserContext);
   const { keycloak } = useKeycloak();
   const { msErrorApi, logoutOptions, } = themeContext;
-  const { user } = userContext;
   const { id } = useParams();
 
   const [loading, setloading] = useState(false);
@@ -43,7 +42,6 @@ const Ficha = () => {
         logoutOptions,
         code
       )
-      console.log("GetDataFicha", response.data);
 
       switch (response.status) {
         case 403:

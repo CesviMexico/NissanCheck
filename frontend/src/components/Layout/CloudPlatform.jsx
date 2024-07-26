@@ -61,7 +61,6 @@ const CloudPlatform = () => {
                 logoutOptions,
                 id_keycloak
             )
-            // console.log("ModulosApi", response)
 
             switch (response.status) {
                 case 403:

@@ -72,7 +72,6 @@ const Home = () => {
             row.table_id
         );
 
-        ////console.log("DetalleComponentes",response)
         setDataSourceDetalle(response.data);
         setColumnsDetalle(response.columns);
         setTablePropsDetalle(response.props_table);
@@ -190,7 +189,6 @@ const Home = () => {
 
 
     const EditElement = (row) => {
-        console.log("EditElement", row)
 
         setEditElementBandT('edit')
         setComponentNo(row.component_no)

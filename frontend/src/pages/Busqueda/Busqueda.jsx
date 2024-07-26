@@ -47,7 +47,6 @@ const Busqueda = () => {
         keycloak,
         logoutOptions,
       )
-      console.log("Busqueda", response.data);
 
       switch (response.status) {
         case 403:
@@ -85,10 +84,7 @@ const Busqueda = () => {
     Videos: (row) => onviewGal(row.url_code, 'video'),
     Mapa: (row) => onViewMaps(row)
   }
-  // const onViewRes = (row) => {
-  //   let code = row.url_code
-  //   window.open('https://appweb.cesvimexico.com.mx/LevInfoCesvi/assets/ScripWeb/reportPDF/PDFEvaluacionBAJAJ.php?code_acces=' + code, '_blank');
-  // }
+  
 
   const onViewRes = (code) => {
     setVisibleFicha(true)
@@ -112,8 +108,6 @@ const Busqueda = () => {
         logoutOptions,
         code
       )
-      console.log("GetDataFicha", response.data);
-
       switch (response.status) {
         case 403:
           setLoadingFicha(false);
@@ -157,7 +151,6 @@ const Busqueda = () => {
         logoutOptions,
         code
       )
-      console.log("onviewGal", response);
       switch (response.status) {
         case 403:
           setloading(false);
@@ -265,7 +258,6 @@ const Busqueda = () => {
           <Grid item xs={12}>
             <CardAntd
               style={{ width: '99%' }}
-            // title="Búsqueda por distribuidor"
             >
               <Grid container spacing={1}>
                 <Grid item xs={12} sm={12} md={12}>
@@ -294,7 +286,6 @@ const Busqueda = () => {
               loading={loading}
               columnsTable={tabCol}
               datasource={valueSelect ? tabData.filter(Item => Item.value == valueSelect) : tabData}
-              // datasource={tabData.filter(Item => Item.value == valueSelect) }
               setDataSource={setTabData}
               pagination={tabProps && tabProps.pagination}
               pageSize={tabProps && tabProps.pageSize}

@@ -7,7 +7,6 @@ const PrivateRoute = ({ children }) => {
   const navigate = useNavigate();
   const { keycloak, initialized } = useKeycloak();
   const isLoggedIn = keycloak.authenticated;
-  // console.log("keycloak", keycloak)
 
   if (!initialized) {
     return <BackdropMUI open={true} />;

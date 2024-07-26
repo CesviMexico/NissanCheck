@@ -6,6 +6,7 @@ import exportFromJSON from 'export-from-json'
 import uniqid from 'uniqid';
 import CryptoJS from 'crypto-js';
 
+
 //Convierte Cadena en arreglo
 export const CadenaArreglo = (cadena, separador = ",") => {
   let arreglo = cadena.split(separador)
@@ -133,8 +134,8 @@ export const statusRecord = {
 
 //Claves unicas
 export function Uid(extra = 0) {
-  return (new Date()).getTime() + Math.random().toString(16).slice(2) + uniqid() + extra
-
+  let count = 0;
+  return (new Date()).getTime() + Math.random().toString(16).slice(2) + uniqid()+(count++) + extra
 }
 
 //EXPORTA A EXCEL
@@ -327,7 +328,6 @@ export const formatTimeBD = (dateOriginal) => {
 
 /* resize imagen antes de subir  JVICENCIO*/
 export const beforeUpload = file => {
-  // //console.log(" beforeUpload === ", file)
 
   return new Promise((resolve) => {
     const reader = new FileReader();
@@ -390,11 +390,28 @@ export const disableDateRangesDatepiker = (range = { startDate: false, endDate: 
   };
 }
 
+//NUEVAS FUNCIONES JRPAVON 25-07-2024
 export function cadenacaracter(str, caracter) {
   let posicion = str.indexOf(caracter);
   let newCadean = str.substring(0, posicion);
   return newCadean;
 }
+
+export const FiterData = (items, filters) => {
+  //estructura de Filters
+  // let filters={ id_marca: [2, 1], id_zona:  [2, 4] }
+
+  const filteredItems = items.filter(item => {
+    return Object.keys(filters).every(key => {
+      if (Array.isArray(item[key])) {
+        return filters[key].some(filter => item[key].includes(filter));
+      }
+      return filters[key].includes(item[key]);
+    })
+  })
+  return filteredItems
+}
+
 
 
 export default separator;

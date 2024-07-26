@@ -48,7 +48,6 @@ const Crud = (props) => {
       editarDatosAction(uri, values, currentrowid);
     }
 
-    // console.log("onFinish", values)
 
   };
 

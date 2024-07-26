@@ -36,8 +36,6 @@ const ComponetTable = (props) => {
                                 <Table.Summary.Cell index={1} align="center"> <Text  strong >{Math.trunc(totalBorrow)}</Text> </Table.Summary.Cell>
                                 <Table.Summary.Cell index={2} align="center"> <Text  strong >{Math.trunc(totalRepayment)}</Text> </Table.Summary.Cell>
                                 <Table.Summary.Cell index={3} align="center"> <Text  strong >{Math.trunc(((totalRepayment/totalBorrow) * 100 ).toPrecision(4))} %</Text> </Table.Summary.Cell>
-
-
                             </Table.Summary.Row>
                         </>
                     );

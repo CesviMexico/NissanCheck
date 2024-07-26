@@ -47,8 +47,6 @@ const Distribuidor = () => {
         keycloak,
         logoutOptions,
       )
-      console.log("Busqueda", response);
-
       switch (response.status) {
         case 403:
           setloading(false);
@@ -76,14 +74,9 @@ const Distribuidor = () => {
   const handleSearch = (value) => {
     !value && setValueSelect(0)
   }
-  const [tallerSelectio, setTallerSelectio] = useState([])
   const [valueSelect, setValueSelect] = useState(0)
   const onSelect = (value) => {
     setValueSelect(value)
-    // console.log("onSelect", value)
-    // console.log("ItemSelect", ItemSelect)
-    //  console.log("url_code", ItemSelect[0].url_code)
-
     let ItemSelect = data.filter(Item => Item.value == value)
     ItemSelect[0].url_code ? modalHist(ItemSelect[0].url_code) : setDataFinal([])
 
@@ -102,8 +95,7 @@ const Distribuidor = () => {
         logoutOptions,
         code
       )
-      console.log("GetDataFicha", response.data);
-
+      console.log(response)
       switch (response.status) {
         case 403:
           setloading(false);
@@ -144,7 +136,6 @@ const Distribuidor = () => {
         logoutOptions,
         code
       )
-      console.log("modalHist", response);
       switch (response.status) {
         case 403:
           setloadingHist(false);
@@ -208,7 +199,6 @@ const Distribuidor = () => {
         logoutOptions,
         code
       )
-      console.log("GetGalery", response);
       switch (response.status) {
         case 403:
           setloading(false);
@@ -254,7 +244,6 @@ const Distribuidor = () => {
   const [arrayMarkProv, setArrayMarkProv] = useState([])
 
   const onViewMaps = (row) => {
-    console.log("row", row)
     setVisibleMaps(true)
     setLatitud(row.latitud)
     setLongitud(row.Longitud)
@@ -287,7 +276,6 @@ const Distribuidor = () => {
             <Grid item xs={12}>
               <CardAntd
                 style={{ width: '99%' }}
-              // title="Búsqueda por distribuidor"
               >
                 <Grid container spacing={1}>
                   <Grid item xs={12} sm={12} md={12}>

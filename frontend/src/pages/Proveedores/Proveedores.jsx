@@ -15,7 +15,6 @@ import Box from "@mui/material/Box";
 import IconButton from '@mui/material/IconButton';
 
 
-
 //ANT
 import { Card as CardAntd, Tooltip, Form, Select, List, Button } from 'antd';
 import { SyncOutlined, } from '@ant-design/icons';
@@ -24,7 +23,7 @@ import { SyncOutlined, } from '@ant-design/icons';
 import Data, { DataHistorico, GetGalery } from "./Services";
 import { DataFicha } from "../Distribuidor/Services";
 
-import { ExportToExcel, Uid } from '../../components/Global/funciones'
+import { ExportToExcel, Uid, FiterData } from '../../components/Global/funciones'
 
 //component local
 import CardInfo from './Components/CardInfo'
@@ -73,8 +72,6 @@ const Proveedores = (props) => {
         keycloak,
         logoutOptions,
       )
-      console.log("FiltersController", response);
-
       switch (response.status) {
         case 403:
           setloading(false);
@@ -85,7 +82,6 @@ const Proveedores = (props) => {
           break;
 
         case 200:
-          // console.log("data", response.data);
           setDataItem(response.data)
           setNoEvaluado(response.noEvaluado)
           setZona(response.zona)
@@ -119,7 +115,6 @@ const Proveedores = (props) => {
         logoutOptions,
         code
       )
-      console.log("GetGalery", response);
       switch (response.status) {
         case 403:
           setloading(false);
@@ -164,7 +159,6 @@ const Proveedores = (props) => {
   const [tabData, setTabData] = useState([])
 
   const modalHist = async (code) => {
-
     try {
       const response = await DataHistorico(
         setloadingHist,
@@ -173,7 +167,6 @@ const Proveedores = (props) => {
         logoutOptions,
         code
       )
-      console.log("modalHist", response);
       switch (response.status) {
         case 403:
           setloadingHist(false);
@@ -208,6 +201,7 @@ const Proveedores = (props) => {
   const [zoom, setZoom] = useState()
   const [arrayMarkInfo, setArrayMarkInfo] = useState([])
   const [arrayMarkProv, setArrayMarkProv] = useState([])
+
   const onViewMaps = (row) => {
 
     setVisibleMaps(true)
@@ -217,7 +211,6 @@ const Proveedores = (props) => {
     setArrayMarkInfo([row])
   }
   const onViewMapsAll = (dataInfo) => {
-
     setVisibleMaps(true)
     setCreate('null')
     setArrayMarkInfo(dataInfo.filter(row => row.latitud != null))
@@ -225,21 +218,9 @@ const Proveedores = (props) => {
 
   }
 
-
-  // const [id_zona, setId_zona] = useState([]);
-  // const [estado, seEstado] = useState([]);
-  // const [csa, setCsa] = useState([]);
-  // const [marca, setMarca] = useState([]);
-  // const [tipo, setTipo] = useState([]);
-  // const [grupo, setGrupo] = useState([]);
-  // const [distribuidor, setDistribuidor] = useState([]);
-
-
   const [filter, setFilter] = useState({});
-  const [dataItemfilter, setDataItemfilter] = useState([]);
-  const onFinish = (values) => {
 
-    console.log('Success:', values)
+  const onFinish = (values) => {
 
     const newFilter = {
       staAudito: values.staAudito && values.staAudito,
@@ -265,79 +246,7 @@ const Proveedores = (props) => {
 
     setFilter(newFilter)
 
-    console.log('newFilter:', newFilter);
-
   }
-
-
-  const FiterData = (items, filters) => {
-    const filteredItems = items.filter(item => {
-      return Object.keys(filters).every(key => {
-        if (Array.isArray(item[key])) {
-          return filters[key].some(filter => item[key].includes(filter));
-        }
-        return filters[key].includes(item[key]);
-      })
-    })
-    return filteredItems
-  }
-
-  let arr = [];
-  const [selectedValues, setSelectedValues] = useState([]);
-  const onActionSelect = (value, action, id) => {
-    // console.log('action-->', action)
-    // console.log('value:', value)
-    // console.log('id:', id)
-    switch (action) {
-      case 'onSelect':
-        arr.push(value)
-        break;
-      case 'onDeselect':
-        arr = arr.filter(x => x !== value)
-        break;
-      default:
-        break;
-    }
-
-    // console.log('Selected Values:', arr);
-  }
-
-  const handleBlur = () => {
-    console.log('onBlur event triggered');
-    console.log('Selected Values:', arr);
-
-    const newFilter = {
-      id_estado: arr
-    }
-
-    let filtrados = FiterData(dataItem, newFilter)
-    console.log('newlist', filtrados);
-
-    const agrupadoPorEdad = filtrados.reduce((grupo, item) => {
-      const zona = item.zona;
-      const id_zona = item.id_zona;
-
-      if (!grupo[zona]) {
-        grupo[zona] = [];
-      }
-
-      grupo[zona].push(item.id_zona);
-
-      return grupo;
-    }, {});
-
-    console.log('newlist', agrupadoPorEdad);
-
-    const result = Object.keys(agrupadoPorEdad).map(category => {
-      return {
-        label: category,
-        value: agrupadoPorEdad[category][0]
-      };
-    });
-    setZona(result)
-    console.log(result);
-  };
-
 
   const onviewFicha = (code) => {
     setVisibleFicha(true)
@@ -360,8 +269,6 @@ const Proveedores = (props) => {
         logoutOptions,
         code
       )
-      console.log("GetDataFicha", response.data);
-
       switch (response.status) {
         case 403:
           setLoadingFicha(false);
@@ -389,7 +296,6 @@ const Proveedores = (props) => {
     setDataFinal([])
     setLoadingFicha(false)
   }
-
 
 
   return (
@@ -442,8 +348,6 @@ const Proveedores = (props) => {
           onviewGal={onviewGal}
           onViewMaps={onViewMaps}
           onviewFicha={onviewFicha}
-
-
         />
 
         <Grid container spacing={1}>
@@ -462,7 +366,6 @@ const Proveedores = (props) => {
               }
             >
               <Form
-                // layout="vertical"
                 name="Filtros"
                 size="small"
                 labelCol={{ flex: '40px' }}
@@ -503,10 +406,6 @@ const Proveedores = (props) => {
                         mode="multiple"
                         placeholder="Por favor seleccione estado"
                         options={estado}
-                      // onBlur={handleBlur}
-                      // onSelect={(e) => onActionSelect(e, 'onSelect', "id_estado")}
-                      // onDeselect={(e) => onActionSelect(e, 'onDeselect', "id_estado")}
-
                       />
                     </Form.Item>
                   </Grid>
@@ -591,11 +490,8 @@ const Proveedores = (props) => {
               </Form>
             </CardAntd>
           </Grid>
-
-
           <Grid item xs={12}>
             <CardAntd
-              // title={'Resultados de la búsqueda'}
               extra={
                 <>
                   <Tooltip title="Mapa">
@@ -628,7 +524,6 @@ const Proveedores = (props) => {
             >
 
               <List
-                // size="large"
                 split={false}
                 dataSource={FiterData(dataItem, filter)}
                 loading={loading}
@@ -647,10 +542,8 @@ const Proveedores = (props) => {
               />
             </CardAntd>
           </Grid>
-
-
         </Grid>
-      </Box >
+      </Box>
     </>
   );
 };
