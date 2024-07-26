@@ -4,28 +4,17 @@ import { useKeycloak } from "@react-keycloak/web";
 import { Icon } from '@iconify/react';
 import UserContext from "../../../context/UserContext";
 
-//MIU
 import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import IconButton from '@mui/material/IconButton';
-import Card from '@mui/joy/Card';
-import CardCover from '@mui/joy/CardCover';
-import CardContent from '@mui/joy/CardContent';
-import Typography from '@mui/joy/Typography';
-
-//ANT
-import { Card as CardAntd, Tooltip, Form, Select, List, Button } from 'antd';
-import { SyncOutlined, } from '@ant-design/icons';
-
-
+import { Form, Select, Button, Spin } from 'antd';
 
 //servicios
-import Data from "../../Proveedores/Services";
+import Data from "../Services";
 import { Uid } from '../../../components/Global/funciones'
+
 
 const Filtros = (props) => {
 
-    const { xs = 12, sm = 6, md = 3, onFinish } = props
+    const { xs = 12, sm = 6, md = 3, onFinish, loadingConsultar } = props
 
     const userContext = useContext(UserContext);
     const themeContext = useContext(ThemeContext);
@@ -34,20 +23,16 @@ const Filtros = (props) => {
     const { user } = userContext;
     const { themeGral, msErrorApi, logoutOptions, colorBadge } = themeContext;
 
-    const [dataItem, setDataItem] = useState([]);
     const [loading, setloading] = useState(false);
 
-    const [noEvaluado, setNoEvaluado] = useState([]);
     const [zona, setZona] = useState([]);
     const [estado, seEstado] = useState([]);
     const [csa, setCsa] = useState([]);
     const [marca, setMarca] = useState([]);
     const [tipo, setTipo] = useState([]);
     const [grupo, setGrupo] = useState([]);
-    const [distribuidor, setDistribuidor] = useState([]);
 
     useEffect(() => { ActualizaTabla() }, []);
-
 
     const ActualizaTabla = async () => {
         try {
@@ -69,15 +54,12 @@ const Filtros = (props) => {
                     break;
 
                 case 200:
-                    setDataItem(response.data)
-                    setNoEvaluado(response.noEvaluado)
                     setZona(response.zona)
                     seEstado(response.estado)
                     setCsa(response.csa)
                     setMarca(response.marca)
                     setTipo(response.tipo)
                     setGrupo(response.grupo)
-                    setDistribuidor(response.distribuidor)
                     break;
 
                 default:
@@ -87,39 +69,6 @@ const Filtros = (props) => {
             setloading(false);
         }
     }
-
-    // const [filter, setFilter] = useState({});
-    // const onFinish = (values) => {
-
-    //     const newFilter = {
-    //         staAudito: values.staAudito && values.staAudito,
-
-    //         id_zona: values.id_zona && values.id_zona,
-    //         id_estado: values.id_estado && values.id_estado,
-    //         id_csa_territorio: values.id_csa_territorio && values.id_csa_territorio,
-    //         id_marca: values.id_marca && values.id_marca,
-    //         id_representacion: values.id_representacion && values.id_representacion,
-    //         id_grupo: values.id_grupo && values.id_grupo,
-    //         id_distribuidor: values.id_distribuidor && values.id_distribuidor
-    //     }
-
-    //     values.staAudito === undefined ? delete newFilter.staAudito : values.staAudito.length == 0 && delete newFilter.staAudito
-
-    //     values.id_zona === undefined ? delete newFilter.id_zona : values.id_zona.length == 0 && delete newFilter.id_zona
-    //     values.id_estado === undefined ? delete newFilter.id_estado : values.id_estado.length == 0 && delete newFilter.id_estado
-    //     values.id_csa_territorio === undefined ? delete newFilter.id_csa_territorio : values.id_csa_territorio.length == 0 && delete newFilter.id_csa_territorio
-    //     values.id_marca === undefined ? delete newFilter.id_marca : values.id_marca.length == 0 && delete newFilter.id_marca
-    //     values.id_representacion === undefined ? delete newFilter.id_representacion : values.id_representacion.length == 0 && delete newFilter.id_representacion
-    //     values.id_grupo === undefined ? delete newFilter.id_grupo : values.id_grupo.length == 0 && delete newFilter.id_grupo
-    //     values.id_distribuidor === undefined ? delete newFilter.id_distribuidor : values.id_distribuidor.length == 0 && delete newFilter.id_distribuidor
-
-    //     setFilter(newFilter)
-
-    //     console.log('newFilter', newFilter)
-
-
-    // }
-
 
     return (
         <>
@@ -136,6 +85,7 @@ const Filtros = (props) => {
                     </Tooltip>
                 }
             > */}
+            <Spin spinning={loading}>
                 <Form
 
                     name="Filtros"
@@ -148,19 +98,6 @@ const Filtros = (props) => {
                 >
 
                     <Grid container spacing={1}>
-
-                        {/* <Grid item xs={xs} sm={sm} md={md}>
-                      <Form.Item name="staAudito" label="Estatus" >
-                        <Select
-                          key={Uid(1)}
-                          allowClear
-                          mode="multiple"
-                          placeholder="Por favor seleccione estatus"
-                          options={noEvaluado}
-                        />
-                      </Form.Item>
-                    </Grid> */}
-
 
                         <Grid item xs={xs} sm={sm} md={md}>
                             <Form.Item name="id_zona" label="Zona" >
@@ -228,23 +165,10 @@ const Filtros = (props) => {
                                 />
                             </Form.Item>
                         </Grid>
-
-                        {/* <Grid item xs={xs} sm={sm} md={md}>
-                      <Form.Item name="id_distribuidor" label="Distribuidor">
-                        <Select
-                          key={Uid(8)}
-                          allowClear
-                          mode="multiple"
-                          placeholder="Por favor seleccione distribuidor"
-                          options={distribuidor}
-                        />
-                      </Form.Item>
-                    </Grid> */}
-
                         <Grid item xs={xs} sm={sm} md={md}>
                             <Form.Item>
                                 <Button
-                                    loading={loading}
+                                    loading={loadingConsultar}
                                     block={true}
                                     style={{
                                         backgroundColor: themeGral.header_colorIconMenu,
@@ -265,7 +189,9 @@ const Filtros = (props) => {
                         </Grid>
                     </Grid>
                 </Form>
+            </Spin>
             {/* </CardAntd> */}
+
 
         </>
     );

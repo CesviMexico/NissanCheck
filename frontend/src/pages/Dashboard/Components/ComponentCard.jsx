@@ -15,7 +15,7 @@ import { Col, Row, Statistic } from 'antd';
 
 
 const ComponentCard = (props) => {
-    const { value = 20, monto = '$ 432.6M', title = 'Gross profit', titleValue = 'profit', icon = 'f7:doc-richtext', onClick } = props
+    const { value = 20, monto = '', title = '', icon = '', onClick } = props
 
     const themeContext = useContext(ThemeContext);
     const { themeGral } = themeContext;
