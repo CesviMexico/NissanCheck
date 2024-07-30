@@ -15,7 +15,7 @@ import { Col, Row, Statistic } from 'antd';
 
 
 const ComponentCard = (props) => {
-    const { value = 20, monto = '', title = '', icon = '', onClick } = props
+    const { value = 20, monto = '', title = '', icon = '', onClick , detalle} = props
 
     const themeContext = useContext(ThemeContext);
     const { themeGral } = themeContext;
@@ -53,7 +53,7 @@ const ComponentCard = (props) => {
                             borderColor: 'primary.500',
                             mx: 'auto',
                         }}
-                        onClick={() => onClick(value)}                        
+                        onClick={() => onClick(detalle)}                        
                     >
                         <Typography level="h2">{monto}</Typography>
                     </Button>

@@ -24,11 +24,11 @@ const ComponenLista = (props) => {
             dataSource={data}
             renderItem={(item, index) => (
                 <List.Item actions={[
-                    <Button variant="outlined" color="primary"
+                    item.item2 && <Button variant="outlined" color="primary"
                         sx={{ '--variant-borderWidth': '2px', borderRadius: 20, borderColor: 'primary.500', mx: 'auto', }}
-                        onClick={() => onClick(title, tipo)}                      
+                        onClick={() => onClick(item, tipo)}                      
                     >
-                        <Typography level="title-lg" style={{ fontSize: 12 }}>{item.item2}</Typography>
+                        <Typography level="title-lg" style={{ fontSize: 12 }}>{item.item2 +' %'}</Typography>
                     </Button>
                 ]} >
                     <List.Item.Meta

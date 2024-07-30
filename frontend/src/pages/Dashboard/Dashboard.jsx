@@ -12,7 +12,13 @@ import { styled } from '@mui/material/styles';
 import { Card as CardAntd, Divider, Spin, } from 'antd';
 
 //servicios
-import { DataDashboard,DataDashboardDetalle } from "./Services";
+import { DataDashboard } from "./Services";
+import { DataFicha } from "../Distribuidor/Services";
+import { DataHistorico,GetGalery } from "../Proveedores/Services";
+import ModalMaps from '../Proveedores/Components/ModalMaps'
+
+
+
 import { Uid } from '../../components/Global/funciones'
 
 //componentes
@@ -21,6 +27,14 @@ import ComponentCard from './Components/ComponentCard'
 import { GraficaRadar } from './Components/GraficasChart'
 import ComponenLista from './Components/ComponentLista'
 import ModalDetalle from './Components/ModalDetalle'
+import MexicoMap from './Components/MexicoMap'
+
+//components detalle
+import DrawerAntd from '../../components/Global/DrawerComponent'
+import ComponentDistribuidor from '../Distribuidor/ComponentDistribuidor'
+import ModalGaleriaFotos, { ModalGaleriaVideo } from '../Proveedores/Components/ModalGaleria'
+import ModalHistorico from '../Proveedores/Components/ModalHistorico'
+
 
 
 const Dashboard = (props) => {
@@ -33,20 +47,19 @@ const Dashboard = (props) => {
   const { user } = userContext;
   const { themeGral, msErrorApi, logoutOptions, colorBadge } = themeContext;
 
-  const [dataItem, setDataItem] = useState([]);
   const [loading, setloading] = useState(false);
-
-
-  const GetResulData = async (code) => {
+  const GetResulData = async (code,parametros) => {
     try {
       const response = await DataDashboard(
         setloading,
         msErrorApi,
         keycloak,
         logoutOptions,
-        code
+        code,
+        parametros
+
       )
-      console.log('GetResulData', response.data);
+      console.log('GetResulData', response);
 
       switch (response.status) {
         case 403:
@@ -59,6 +72,8 @@ const Dashboard = (props) => {
 
         case 200:
           setData(response.data)
+          setTabProps(response.data.props_table)
+          setTabCol(response.data.columns)
           break;
 
         default:
@@ -99,7 +114,7 @@ const Dashboard = (props) => {
 
     console.log('newFilter', newFilter)
 
-    GetResulData('20240724143215_7ojqCXNELW5Ag1Htw0n2bcST9ZiO4leVDx6uFpsrJ8dyhMzkIR')
+    GetResulData('20240724143215_7ojqCXNELW5Ag1Htw0n2bcST9ZiO4leVDx6uFpsrJ8dyhMzkIR',newFilter)
     // GetResulData('20240724100651_kG5DYFnwfqWQrTthIUgZca9BENeC410KJ2ldSmuPxj6s83vpV7')
     // GetResulData('20240722142223_71xVguykilGFtCO9TpSKnIvsZ20HPLWweBA3EcXY5mdaDQJUR4')
 
@@ -118,15 +133,14 @@ const Dashboard = (props) => {
   });
 
   const [data, setData] = useState([])
-
   const Detallezona = (e) => {
-    console.log('Detallezona', e)
-    modalHist(e)
+    setVisibleDetalle(true);
+    setTabData(e)
   };
 
   const DetalleTipo = (e) => {
-    console.log('Tipo ', e)
-    modalHist(e)
+    setVisibleDetalle(true);
+    setTabData(e)
   };
 
   const DetalleFaltantes = (e, tipo) => {
@@ -134,23 +148,156 @@ const Dashboard = (props) => {
     modalHist(e)
   };
 
-  const DetalleDistribuidores = (e, tipo) => {
-    console.log('Tipo ', e, tipo)
-    modalHist(e)
+  const DetalleDistribuidores = (item, tipo) => {
+    modalHist(item.url_code)
   };
 
 
+  //Detalle
+  const [visibleDetalle, setVisibleDetalle] = useState(false)
+  const [loadingDetalle, setloadingDetalle] = useState(false);
+  const [tabProps, setTabProps] = useState([])
+  const [tabCol, setTabCol] = useState([])
+  const [tabData, setTabData] = useState([]) 
+
+  /// detalle modal
+  const onCloseFicha = (code) => {
+    setVisibleFicha(false)
+    setDataFinal([])
+    setLoadingFicha(false)
+  }
+
+  //consulta  de ficha tecnica
+  const [visibleFicha, setVisibleFicha] = useState(false)
+  const [dataFinal, setDataFinal] = useState([])
+  const [loadingFicha, setLoadingFicha] = useState(false);
+
+  const GetDataFicha = async (code) => {
+    try {
+      const response = await DataFicha(
+        setLoadingFicha,
+        msErrorApi,
+        keycloak,
+        logoutOptions,
+        code
+      )
+      switch (response.status) {
+        case 403:
+          setLoadingFicha(false);
+          break;
+
+        case undefined:
+          setLoadingFicha(false);
+          break;
+
+        case 200:
+          setDataFinal(response.data)
+          break;
+
+        default:
+          break;
+      }
+    } catch (error) {
+      setLoadingFicha(false);
+    }
+
+  };
+
+  const onviewFicha = (code) => {
+    setVisibleFicha(true)
+    if (code) {
+      GetDataFicha(code)
+    }
+  }
+
+  //image action
+  const [visibleFotos, setVisibleFotos] = useState(false)
+  const [visibleVideos, setVisibleVideos] = useState(false)
+
+  const [listImage, setListImage] = useState([])
+  const onviewGal = async (code, tipo) => {
+    try {
+      const response = await GetGalery(
+        setloading,
+        msErrorApi,
+        keycloak,
+        logoutOptions,
+        code
+      )
+      switch (response.status) {
+        case 403:
+          setloading(false);
+          break;
+
+        case undefined:
+          setloading(false);
+          break;
+
+        case 200:
+          switch (tipo) {
+            case 'foto':
+              setVisibleFotos(true)
+              setListImage(response.data.filter(item => item.tipo == "foto"))
+              break;
+            case 'video':
+              setVisibleVideos(true)
+              setListImage(response.data.filter(item => item.tipo == "video"))
+              break;
+            default:
+              break;
+          }
+
+
+          break;
+
+        default:
+          break;
+      }
+    } catch (error) {
+      setloading(false);
+    }
+
+  }
+
+
+  //inicaliza maps
+  useEffect(() => {
+    setLatitud(19.400352327662368)
+    setLongitud(-99.56366303164687)
+    setZoom(5)
+    setCreate('null')
+  }, []);
+
+  //maps
+  const [visibleMaps, setVisibleMaps] = useState(false)
+  const [create, setCreate] = useState([])
+  const [latitud, setLatitud] = useState()
+  const [longitud, setLongitud] = useState()
+  const [zoom, setZoom] = useState()
+  const [arrayMarkInfo, setArrayMarkInfo] = useState([])
+  const [arrayMarkProv, setArrayMarkProv] = useState([])
+
+  const onViewMaps = (row) => {
+
+    setVisibleMaps(true)
+    setLatitud(row.latitud)
+    setLongitud(row.Longitud)
+    setZoom(5)
+    setArrayMarkInfo([row])
+  }
+
+
    //history
-   const [visibleDetalle, setVisibleDetalle] = useState(false)
-   const [loadingDetalle, setloadingDetalle] = useState(false);
-   const [tabProps, setTabProps] = useState([])
-   const [tabCol, setTabCol] = useState([])
-   const [tabData, setTabData] = useState([])
+   const [visibleHist, setVisibleHist] = useState(false)
+   const [loadingHist, setloadingHist] = useState(false);
+   const [tabProps2, setTabProps2] = useState([])
+   const [tabCol2, setTabCol2] = useState([])
+   const [tabData2, setTabData2] = useState([])
  
    const modalHist = async (code) => {
      try {
-       const response = await DataDashboardDetalle(
-         setloadingDetalle,
+       const response = await DataHistorico(
+         setloadingHist,
          msErrorApi,
          keycloak,
          logoutOptions,
@@ -158,31 +305,29 @@ const Dashboard = (props) => {
        )
        switch (response.status) {
          case 403:
-           setloadingDetalle(false);
+           setloadingHist(false);
            break;
  
          case undefined:
-           setloadingDetalle(false);
+           setloadingHist(false);
            break;
  
          case 200:
-           setVisibleDetalle(true);
-           setTabProps(response.props_table)
-           setTabCol(response.columns)
-           setTabData(response.data)
+           setVisibleHist(true);
+           setTabProps2(response.props_table)
+           setTabCol2(response.columns)
+           setTabData2(response.data)
            break;
  
          default:
            break;
        }
      } catch (error) {
-       setloadingDetalle(false);
+       setloadingHist(false);
      }
  
    }
  
-
-
 
   return (
     <>
@@ -232,7 +377,7 @@ const Dashboard = (props) => {
                 <Grid container spacing={1}>
                   {data.dataZona && data.dataZona.map((item, index) => (
                     <Grid item xs={12} sm={6} md={3} key={index * 3}>
-                      <ComponentCard onClick={Detallezona} value={item.value} monto={item.monto} title={item.title} titleValue={item.titleValue} icon={item.icon} />
+                      <ComponentCard detalle={item.detalle} onClick={Detallezona} value={item.value} monto={item.monto} title={item.title} titleValue={item.titleValue} icon={item.icon} />
                     </Grid>
                   ))}
                 </Grid>
@@ -243,7 +388,7 @@ const Dashboard = (props) => {
                 <Grid container spacing={1}>
                   {data.dataRepresentacion && data.dataRepresentacion.map((item, index) => (
                     <Grid item xs={12} sm={6} md={3} key={index * 3}>
-                      <ComponentCard onClick={DetalleTipo} value={item.value} monto={item.monto} title={item.title} titleValue={item.titleValue} icon={item.icon} />
+                      <ComponentCard detalle={item.detalle} onClick={DetalleTipo} value={item.value} monto={item.monto} title={item.title} titleValue={item.titleValue} icon={item.icon} />
                     </Grid>
                   ))}
                 </Grid>
@@ -252,9 +397,17 @@ const Dashboard = (props) => {
             </CardAntd.Grid>
           }
 
-          {/* <CardAntd.Grid hoverable={false} style={gridStyle100}>
-            <Divider orientation="left">Estado</Divider>
-          </CardAntd.Grid> */}
+          {data.dataMapa &&
+            <CardAntd.Grid hoverable={false} style={gridStyle100}>
+              <Spin spinning={loading}>
+                <Divider orientation="left">Estado</Divider>
+                <MexicoMap
+                  data={data.dataMapa}
+                />
+              </Spin>
+            </CardAntd.Grid>
+          }
+
           {data.dataGrafica &&
             <CardAntd.Grid hoverable={false} style={gridStyle100}>
               <Spin spinning={loading}>
@@ -279,8 +432,8 @@ const Dashboard = (props) => {
                   icon={'solar:cup-first-outline'}
                   title='Ranking de cumplimiento de Distribuidores'
                   data={data.dataDistribuidores && data.dataDistribuidores}
-                  onClick={DetalleFaltantes}
-                  tipo={'tipo'}
+                  onClick={DetalleDistribuidores}
+                  tipo={'Distribuidores'}
                 />
               </Spin>
             </CardAntd.Grid>
@@ -293,8 +446,8 @@ const Dashboard = (props) => {
                   icon={'material-symbols-light:tools-power-drill-outline-sharp'}
                   title='Ranking de HES faltantes'
                   data={data.dataFaltantes && data.dataFaltantes}
-                  onClick={DetalleDistribuidores}
-                  tipo={'tipo'}
+                  onClick={DetalleFaltantes}
+                  tipo={'faltantes'}
                 />
               </Spin>
             </CardAntd.Grid>
@@ -305,7 +458,6 @@ const Dashboard = (props) => {
 
 
         <ModalDetalle
-
           visibleDetalle={visibleDetalle}
           setVisibleDetalle={setVisibleDetalle}
           loadingDetalle={loadingDetalle}
@@ -314,11 +466,58 @@ const Dashboard = (props) => {
           setTabData={setTabData}
           tabProps={tabProps}
 
-          // onviewGal={onviewGal}
-          // onViewMaps={onViewMaps}
-          // onviewFicha={onviewFicha}
+          onviewGal={onviewGal}
+          onViewMaps={onViewMaps}
+          onviewFicha={onviewFicha}
         />
 
+        <DrawerAntd
+          visible={visibleFicha}
+          onClose={() => onCloseFicha()}
+          width="90%"
+        >
+          <ComponentDistribuidor
+            loading={loadingFicha}
+            data={dataFinal}
+            resultSize={100}
+          />
+        </DrawerAntd>
+
+        <ModalGaleriaFotos
+          visible={visibleFotos}
+          setVisible={setVisibleFotos}
+          listImage={listImage}
+        />
+        <ModalGaleriaVideo
+          visible={visibleVideos}
+          setVisible={setVisibleVideos}
+          listImage={listImage}
+        />
+
+        <ModalMaps
+          visibleMaps={visibleMaps}
+          setVisibleMaps={setVisibleMaps}
+          create={create}
+          latitud={latitud}
+          longitud={longitud}
+          zoom={zoom}
+          arrayMarkInfo={arrayMarkInfo}
+          arrayMarkProv={arrayMarkProv}
+        />
+
+        <ModalHistorico
+          visibleHist={visibleHist}
+          setVisibleHist={setVisibleHist}
+          loadingHist={loadingHist}
+          tabCol={tabCol2}
+          tabData={tabData2}
+          setTabData={setTabData2}
+          tabProps={tabProps2}
+
+          onviewGal={onviewGal}
+          onViewMaps={onViewMaps}
+          onviewFicha={onviewFicha}
+        />
 
       </Box>
     </>
