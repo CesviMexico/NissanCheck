@@ -60,7 +60,7 @@ const Router = () => {
 
           <Route path="/Page403" element={<PrivateRoute><Page403 /> </PrivateRoute>} />
           <Route path="/Page404" element={<PrivateRoute><Layout><Page404 /></Layout> </PrivateRoute>} />
-          <Route path="*" element={<PrivateRoute><Layout><Dashboard /></Layout> </PrivateRoute>} />
+          <Route path="*" element={<PrivateRoute><Layout><Distribuidor /></Layout> </PrivateRoute>} />
         </Routes>
       </React.Suspense>
     </HashRouter>

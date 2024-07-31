@@ -26,7 +26,7 @@ const MexicoMap = (props) => {
                 text: ''
             },
             mapNavigation: {
-                enabled: true,
+                enabled: false, // Deshabilitar la navegación del mapa
                 buttonOptions: {
                     verticalAlign: 'bottom'
                 }

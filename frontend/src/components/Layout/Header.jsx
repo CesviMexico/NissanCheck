@@ -86,6 +86,7 @@ const HeaderComponent = () => {
     updateUser({
       ...response[0],
       path_foto: response[0].path_foto,
+      path_fotoB: response[0].path_fotoB,
       id_modulo: process.env.REACT_APP_Modulo,
       id_keycloak: user_info.sub,
       preferred_username: user_info.preferred_username,
@@ -190,7 +191,7 @@ const HeaderComponent = () => {
             <AvatarMUI
               alt="NameUser"
               // src={process.env.REACT_APP_BASE_URL+"SIC_Empleado_Fotos/" + user.cve_empleado + ".JPG"}
-              src={user.path_foto}
+              src={user.path_fotoB}
 
 
             />

@@ -14,12 +14,8 @@ import { Card as CardAntd, Divider, Spin, } from 'antd';
 //servicios
 import { DataDashboard } from "./Services";
 import { DataFicha } from "../Distribuidor/Services";
-import { DataHistorico,GetGalery } from "../Proveedores/Services";
+import { DataHistorico, GetGalery } from "../Proveedores/Services";
 import ModalMaps from '../Proveedores/Components/ModalMaps'
-
-
-
-import { Uid } from '../../components/Global/funciones'
 
 //componentes
 import Filtros from "./Components/Filtros";
@@ -48,7 +44,7 @@ const Dashboard = (props) => {
   const { themeGral, msErrorApi, logoutOptions, colorBadge } = themeContext;
 
   const [loading, setloading] = useState(false);
-  const GetResulData = async (code,parametros) => {
+  const GetResulData = async (code, parametros) => {
     try {
       const response = await DataDashboard(
         setloading,
@@ -60,7 +56,7 @@ const Dashboard = (props) => {
 
       )
       ////console.log('ResultadoHESfaltante', response.data.dataGraficaLista.ResultadoHESfaltante);
-      ////console.log('GetResulData', response.data);
+      console.log('GetResulData', response.data);
 
       switch (response.status) {
         case 403:
@@ -106,7 +102,7 @@ const Dashboard = (props) => {
     values.id_grupo === undefined ? delete newFilter.id_grupo : values.id_grupo.length == 0 && delete newFilter.id_grupo
 
     // setFilter(newFilter)
-    GetResulData('Code',newFilter)
+    GetResulData('Code', newFilter)
   }
 
   const gridStyle50 = { width: '50%', }
@@ -150,7 +146,7 @@ const Dashboard = (props) => {
   const [loadingDetalle, setloadingDetalle] = useState(false);
   const [tabProps, setTabProps] = useState([])
   const [tabCol, setTabCol] = useState([])
-  const [tabData, setTabData] = useState([]) 
+  const [tabData, setTabData] = useState([])
 
   /// detalle modal
   const onCloseFicha = (code) => {
@@ -280,47 +276,47 @@ const Dashboard = (props) => {
   }
 
 
-   //history
-   const [visibleHist, setVisibleHist] = useState(false)
-   const [loadingHist, setloadingHist] = useState(false);
-   const [tabProps2, setTabProps2] = useState([])
-   const [tabCol2, setTabCol2] = useState([])
-   const [tabData2, setTabData2] = useState([])
- 
-   const modalHist = async (code) => {
-     try {
-       const response = await DataHistorico(
-         setloadingHist,
-         msErrorApi,
-         keycloak,
-         logoutOptions,
-         code
-       )
-       switch (response.status) {
-         case 403:
-           setloadingHist(false);
-           break;
- 
-         case undefined:
-           setloadingHist(false);
-           break;
- 
-         case 200:
-           setVisibleHist(true);
-           setTabProps2(response.props_table)
-           setTabCol2(response.columns)
-           setTabData2(response.data)
-           break;
- 
-         default:
-           break;
-       }
-     } catch (error) {
-       setloadingHist(false);
-     }
- 
-   }
- 
+  //history
+  const [visibleHist, setVisibleHist] = useState(false)
+  const [loadingHist, setloadingHist] = useState(false);
+  const [tabProps2, setTabProps2] = useState([])
+  const [tabCol2, setTabCol2] = useState([])
+  const [tabData2, setTabData2] = useState([])
+
+  const modalHist = async (code) => {
+    try {
+      const response = await DataHistorico(
+        setloadingHist,
+        msErrorApi,
+        keycloak,
+        logoutOptions,
+        code
+      )
+      switch (response.status) {
+        case 403:
+          setloadingHist(false);
+          break;
+
+        case undefined:
+          setloadingHist(false);
+          break;
+
+        case 200:
+          setVisibleHist(true);
+          setTabProps2(response.props_table)
+          setTabCol2(response.columns)
+          setTabData2(response.data)
+          break;
+
+        default:
+          break;
+      }
+    } catch (error) {
+      setloadingHist(false);
+    }
+
+  }
+
 
   return (
     <>
@@ -338,8 +334,7 @@ const Dashboard = (props) => {
                     width: '75px',
                     height: '60px',
                   }}
-                  // src={"https://www.nissantollocan.com.mx/assets/logos/transparent/nissan-gv.png"}
-                  src={"https://appweb.cesvimexico.com.mx/NissanCenso/static/media/LogoNISSAN3.png"}
+                  src={user.path_foto}
 
                 />
               </Grid>

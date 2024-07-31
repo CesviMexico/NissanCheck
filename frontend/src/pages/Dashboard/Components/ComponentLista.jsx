@@ -26,13 +26,14 @@ const ComponenLista = (props) => {
                 <List.Item actions={[
                     item.item2 && <Button variant="outlined" color="primary"
                         sx={{ '--variant-borderWidth': '2px', borderRadius: 20, borderColor: 'primary.500', mx: 'auto', }}
-                        onClick={() => onClick(item, tipo)}                      
+                        onClick={() => onClick(item, tipo)}
                     >
-                        <Typography level="title-lg" style={{ fontSize: 12 }}>{item.item2 +' %'}</Typography>
+                        <Typography level="title-lg" style={{ fontSize: 12 }}>{item.item2 + ' %'}</Typography>
                     </Button>
                 ]} >
                     <List.Item.Meta
                         avatar={<Icon icon={icon} style={{ fontSize: 25, color: color }} />}
+                        title={item.NoParte && item.NoParte}
                         description={
                             <Typography level="inherit" style={{ fontSize: 14 }}   >
                                 {item.item1}

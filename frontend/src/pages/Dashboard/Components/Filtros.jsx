@@ -43,7 +43,7 @@ const Filtros = (props) => {
                 logoutOptions,
                 parametros,
             )
-            // console.log('Params-->', response.params)
+            console.log('Params-->', response.params)
 
 
             switch (response.status) {
@@ -145,12 +145,19 @@ const Filtros = (props) => {
 
     const Limpiar = () => {
 
-        ZonaValue = null;
-        EstadoValue = null;
-        CsaValue = null;
-        MarcaValue = null;
-        TipoValue = null;
-        GrupoValue = null;
+        ZonaValue = null
+        EstadoValue = null
+        CsaValue = null
+        MarcaValue = null
+        TipoValue = null
+        GrupoValue = null
+
+        setZona([])
+        seEstado([])
+        setCsa([])
+        setMarca([])
+        setTipo([])
+        setGrupo([])
 
         setNewFilterRequ([])
         form.resetFields()

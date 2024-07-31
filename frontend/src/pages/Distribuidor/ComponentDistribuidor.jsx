@@ -1,5 +1,7 @@
 import React, { useContext, } from "react";
 import ThemeContext from "../../context/ThemContext";
+import UserContext from "../../context/UserContext";
+
 import { Icon } from '@iconify/react';
 
 //MIU
@@ -20,6 +22,9 @@ import { GraficaRadar } from './Components/GraficasChart';
 const ComponentDistribuidor = (props) => {
 
     const { loading, data, resultSize = 200 } = props
+
+    const userContext = useContext(UserContext);
+    const { user } = userContext;
 
     const themeContext = useContext(ThemeContext);
     const { themeGral } = themeContext;
@@ -61,9 +66,7 @@ const ComponentDistribuidor = (props) => {
                                                 width: '75px',
                                                 height: '60px',
                                             }}
-                                            // src={"https://www.nissantollocan.com.mx/assets/logos/transparent/nissan-gv.png"}
-                                            src={"https://appweb.cesvimexico.com.mx/NissanCenso/static/media/LogoNISSAN3.png"}
-
+                                            src={user.path_foto}
                                         />
                                     </Grid>
                                     <Grid item>{data.title && data.title}</Grid>
