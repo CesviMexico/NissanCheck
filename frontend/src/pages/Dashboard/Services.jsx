@@ -2,15 +2,16 @@
 // import React, {useContext} from "react";
 import { getAxiosLumen } from '../../components/Global/funciones'
 
-export const Data = async (setloading, msErrorApi, keycloak, logoutOptions) => {
+export const Data = async (setloading, msErrorApi, keycloak, logoutOptions, parametros) => {
     const response = await getAxiosLumen({
         uri: `/Censo/Filter/Dashboard`,
         setloading: setloading,
         msErrorApi: msErrorApi,
         keycloak: keycloak,
         notification: false,
-        request: 'get',
-        logoutOptions: logoutOptions
+        request: 'post',
+        logoutOptions: logoutOptions,
+        parametros,
 
     })
     return response

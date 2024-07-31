@@ -48,9 +48,9 @@ const ModalMaps = (props) => {
                             </Grid>
                         </div>
                         </Col>
-                        <Col span={5}> <div style={{ padding: '0px 10px' }} >
+                        <Col span={2}> <div style={{ padding: '0px 10px' }} >
                             <Grid container spacing={1}>
-                                <Grid item xs={12}>     NISSAN EXPRESS CONTACT     </Grid>
+                                <Grid item xs={12}>    NEC     </Grid>
                             </Grid>
                         </div>
                         </Col>

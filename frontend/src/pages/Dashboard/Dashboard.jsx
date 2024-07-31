@@ -59,7 +59,8 @@ const Dashboard = (props) => {
         parametros
 
       )
-      console.log('GetResulData', response);
+      ////console.log('ResultadoHESfaltante', response.data.dataGraficaLista.ResultadoHESfaltante);
+      ////console.log('GetResulData', response.data);
 
       switch (response.status) {
         case 403:
@@ -85,22 +86,17 @@ const Dashboard = (props) => {
   }
 
 
-  const [filter, setFilter] = useState({});
+  // const [filter, setFilter] = useState({});
   const onFinish = (values) => {
 
     const newFilter = {
-      staAudito: values.staAudito && values.staAudito,
-
       id_zona: values.id_zona && values.id_zona,
       id_estado: values.id_estado && values.id_estado,
       id_csa_territorio: values.id_csa_territorio && values.id_csa_territorio,
       id_marca: values.id_marca && values.id_marca,
       id_representacion: values.id_representacion && values.id_representacion,
       id_grupo: values.id_grupo && values.id_grupo,
-      id_distribuidor: values.id_distribuidor && values.id_distribuidor
     }
-
-    values.staAudito === undefined ? delete newFilter.staAudito : values.staAudito.length == 0 && delete newFilter.staAudito
 
     values.id_zona === undefined ? delete newFilter.id_zona : values.id_zona.length == 0 && delete newFilter.id_zona
     values.id_estado === undefined ? delete newFilter.id_estado : values.id_estado.length == 0 && delete newFilter.id_estado
@@ -108,17 +104,9 @@ const Dashboard = (props) => {
     values.id_marca === undefined ? delete newFilter.id_marca : values.id_marca.length == 0 && delete newFilter.id_marca
     values.id_representacion === undefined ? delete newFilter.id_representacion : values.id_representacion.length == 0 && delete newFilter.id_representacion
     values.id_grupo === undefined ? delete newFilter.id_grupo : values.id_grupo.length == 0 && delete newFilter.id_grupo
-    values.id_distribuidor === undefined ? delete newFilter.id_distribuidor : values.id_distribuidor.length == 0 && delete newFilter.id_distribuidor
 
-    setFilter(newFilter)
-
-    console.log('newFilter', newFilter)
-
-    GetResulData('20240724143215_7ojqCXNELW5Ag1Htw0n2bcST9ZiO4leVDx6uFpsrJ8dyhMzkIR',newFilter)
-    // GetResulData('20240724100651_kG5DYFnwfqWQrTthIUgZca9BENeC410KJ2ldSmuPxj6s83vpV7')
-    // GetResulData('20240722142223_71xVguykilGFtCO9TpSKnIvsZ20HPLWweBA3EcXY5mdaDQJUR4')
-
-
+    // setFilter(newFilter)
+    GetResulData('Code',newFilter)
   }
 
   const gridStyle50 = { width: '50%', }
@@ -144,8 +132,12 @@ const Dashboard = (props) => {
   };
 
   const DetalleFaltantes = (e, tipo) => {
-    console.log('Tipo ', e, tipo)
-    modalHist(e)
+    // ////console.log('Tipo ', e, tipo)
+    ////console.log('talleres ', e.talleres)
+    ////console.log('tabCol ', tabCol)
+
+    setVisibleDetalle(true);
+    setTabData(e.talleres)
   };
 
   const DetalleDistribuidores = (item, tipo) => {
@@ -278,6 +270,7 @@ const Dashboard = (props) => {
   const [arrayMarkProv, setArrayMarkProv] = useState([])
 
   const onViewMaps = (row) => {
+    ////console.log('onViewMaps ', row)
 
     setVisibleMaps(true)
     setLatitud(row.latitud)
@@ -400,7 +393,7 @@ const Dashboard = (props) => {
           {data.dataMapa &&
             <CardAntd.Grid hoverable={false} style={gridStyle100}>
               <Spin spinning={loading}>
-                <Divider orientation="left">Estado</Divider>
+                {/* <Divider orientation="left">Estado</Divider> */}
                 <MexicoMap
                   data={data.dataMapa}
                 />

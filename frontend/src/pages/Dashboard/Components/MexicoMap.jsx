@@ -19,8 +19,8 @@ const MexicoMap = (props) => {
         setOptions({
             chart: {
                 map: mapDataMX,
-                width: '100%', // Ancho del gráfico
-                height: '100%' // Altura del gráfico
+                width: 999, // Ancho del gráfico
+                height: 700 // Altura del gráfico
             },
             title: {
                 text: ''
@@ -68,7 +68,7 @@ const MexicoMap = (props) => {
                 }
             ]
         });
-    }, []);
+    }, [data]);
 
     return (
         <div>

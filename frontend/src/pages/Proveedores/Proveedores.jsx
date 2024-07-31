@@ -384,6 +384,9 @@ const Proveedores = (props) => {
                         mode="multiple"
                         placeholder="Por favor seleccione estatus"
                         options={noEvaluado}
+                        filterOption={(input, option) =>
+                          (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                        }
                       />
                     </Form.Item>
                   </Grid>
@@ -395,6 +398,9 @@ const Proveedores = (props) => {
                         mode="multiple"
                         placeholder="Por favor seleccione zona"
                         options={zona}
+                        filterOption={(input, option) =>
+                                        (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                                    }
                       />
                     </Form.Item>
                   </Grid>
@@ -405,6 +411,9 @@ const Proveedores = (props) => {
                         allowClear
                         mode="multiple"
                         placeholder="Por favor seleccione estado"
+                        filterOption={(input, option) =>
+                                        (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                                    }
                         options={estado}
                       />
                     </Form.Item>
@@ -416,6 +425,9 @@ const Proveedores = (props) => {
                         allowClear
                         mode="multiple"
                         placeholder="Por favor seleccione csa/territorio"
+                        filterOption={(input, option) =>
+                                        (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                                    }
                         options={csa}
                       />
                     </Form.Item>
@@ -427,6 +439,9 @@ const Proveedores = (props) => {
                         allowClear
                         mode="multiple"
                         placeholder="Por favor seleccione marca"
+                        filterOption={(input, option) =>
+                                        (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                                    }
                         options={marca}
                       />
                     </Form.Item>
@@ -438,6 +453,9 @@ const Proveedores = (props) => {
                         allowClear
                         mode="multiple"
                         placeholder="Por favor seleccione tipo"
+                        filterOption={(input, option) =>
+                                        (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                                    }
                         options={tipo}
                       />
                     </Form.Item>
@@ -449,6 +467,9 @@ const Proveedores = (props) => {
                         allowClear
                         mode="multiple"
                         placeholder="Por favor seleccione grupo"
+                        filterOption={(input, option) =>
+                                        (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                                    }
                         options={grupo}
                       />
                     </Form.Item>
@@ -460,6 +481,9 @@ const Proveedores = (props) => {
                         allowClear
                         mode="multiple"
                         placeholder="Por favor seleccione distribuidor"
+                        filterOption={(input, option) =>
+                                        (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                                    }
                         options={distribuidor}
                       />
                     </Form.Item>
