@@ -24,6 +24,8 @@ import { GraficaRadar } from './Components/GraficasChart'
 import ComponenLista from './Components/ComponentLista'
 import ModalDetalle from './Components/ModalDetalle'
 import MexicoMap from './Components/MexicoMap'
+import ChipWithDecorators from './Components/ChipWithDecorators'
+
 
 //components detalle
 import DrawerAntd from '../../components/Global/DrawerComponent'
@@ -55,7 +57,6 @@ const Dashboard = (props) => {
         parametros
 
       )
-      ////console.log('ResultadoHESfaltante', response.data.dataGraficaLista.ResultadoHESfaltante);
       console.log('GetResulData', response.data);
 
       switch (response.status) {
@@ -357,10 +358,12 @@ const Dashboard = (props) => {
             <Filtros onFinish={onFinish} loadingConsultar={loading} />
           </CardAntd.Grid>
 
+
+
           {data.dataZona &&
             <CardAntd.Grid hoverable={false} style={gridStyle100}>
-
               <Spin spinning={loading}>
+                <ChipWithDecorators total={data.T_All}  promedio={data.T_AVG}   />
                 <Divider orientation="left">Zona</Divider>
                 <Grid container spacing={1}>
                   {data.dataZona && data.dataZona.map((item, index) => (

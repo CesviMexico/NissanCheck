@@ -65,6 +65,15 @@ const MexicoMap = (props) => {
                     // color: '#FF0000', // Color base del mapa
                     // borderColor: '#000000', // Color del borde
                     // borderWidth: 1 // Ancho del borde
+                    point: {
+                        events: {
+                            click: function () {
+                                alert(`You clicked on ${this.name}`);
+                                console.log("click",this)
+                                // Puedes reemplazar el alert con cualquier acción que desees
+                            }
+                        }
+                    }
                 }
             ]
         });

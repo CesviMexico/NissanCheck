@@ -43,5 +43,21 @@ export const GetGalery = async (setloading ,msErrorApi ,keycloak ,logoutOptions,
 return response
 }
 
+export const DataFilter = async (setloading, msErrorApi, keycloak, logoutOptions, parametros) => {
+    const response = await getAxiosLumen({
+        uri: `/Censo/Filter/Proveedores`,
+        setloading: setloading,
+        msErrorApi: msErrorApi,
+        keycloak: keycloak,
+        notification: false,
+        request: 'post',
+        logoutOptions: logoutOptions,
+        parametros,
+
+    })
+    return response
+}
+
+
 
 export default Data;

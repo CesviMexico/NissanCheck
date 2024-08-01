@@ -16,16 +16,17 @@ import IconButton from '@mui/material/IconButton';
 
 
 //ANT
-import { Card as CardAntd, Tooltip, Form, Select, List, Button } from 'antd';
+import { Card as CardAntd, Tooltip, List, } from 'antd';
 import { SyncOutlined, } from '@ant-design/icons';
 
 //servicios
 import Data, { DataHistorico, GetGalery } from "./Services";
 import { DataFicha } from "../Distribuidor/Services";
 
-import { ExportToExcel, Uid, FiterData } from '../../components/Global/funciones'
+import { ExportToExcel,  FiterData } from '../../components/Global/funciones'
 
 //component local
+import Filtros from "./Components/Filtros";
 import CardInfo from './Components/CardInfo'
 import ModalHistorico from './Components/ModalHistorico'
 import ModalGaleriaFotos, { ModalGaleriaVideo } from './Components/ModalGaleria'
@@ -44,14 +45,14 @@ const Proveedores = (props) => {
   const [dataItem, setDataItem] = useState([]);
   const [loading, setloading] = useState(false);
 
-  const [noEvaluado, setNoEvaluado] = useState([]);
-  const [zona, setZona] = useState([]);
-  const [estado, seEstado] = useState([]);
-  const [csa, setCsa] = useState([]);
-  const [marca, setMarca] = useState([]);
-  const [tipo, setTipo] = useState([]);
-  const [grupo, setGrupo] = useState([]);
-  const [distribuidor, setDistribuidor] = useState([]);
+  // const [noEvaluado, setNoEvaluado] = useState([]);
+  // const [zona, setZona] = useState([]);
+  // const [estado, seEstado] = useState([]);
+  // const [csa, setCsa] = useState([]);
+  // const [marca, setMarca] = useState([]);
+  // const [tipo, setTipo] = useState([]);
+  // const [grupo, setGrupo] = useState([]);
+  // const [distribuidor, setDistribuidor] = useState([]);
 
 
   useEffect(() => { ActualizaTabla() }, []);
@@ -83,14 +84,14 @@ const Proveedores = (props) => {
 
         case 200:
           setDataItem(response.data)
-          setNoEvaluado(response.noEvaluado)
-          setZona(response.zona)
-          seEstado(response.estado)
-          setCsa(response.csa)
-          setMarca(response.marca)
-          setTipo(response.tipo)
-          setGrupo(response.grupo)
-          setDistribuidor(response.distribuidor)
+          // setNoEvaluado(response.noEvaluado)
+          // setZona(response.zona)
+          // seEstado(response.estado)
+          // setCsa(response.csa)
+          // setMarca(response.marca)
+          // setTipo(response.tipo)
+          // setGrupo(response.grupo)
+          // setDistribuidor(response.distribuidor)
           break;
 
         default:
@@ -351,6 +352,8 @@ const Proveedores = (props) => {
         />
 
         <Grid container spacing={1}>
+
+
           <Grid item xs={12}>
             <CardAntd
               style={{ width: '99%' }}
@@ -365,155 +368,10 @@ const Proveedores = (props) => {
                 </Tooltip>
               }
             >
-              <Form
-                name="Filtros"
-                size="small"
-                labelCol={{ flex: '40px' }}
-                labelAlign="left"
-                labelWrap
-                wrapperCol={{ flex: 1 }}
-                onFinish={onFinish}
-              >
-
-                <Grid container spacing={1}>
-                  <Grid item xs={xs} sm={sm} md={md}>
-                    <Form.Item name="staAudito" label="Estatus" >
-                      <Select
-                        key={Uid(1)}
-                        allowClear
-                        mode="multiple"
-                        placeholder="Por favor seleccione estatus"
-                        options={noEvaluado}
-                        filterOption={(input, option) =>
-                          (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
-                        }
-                      />
-                    </Form.Item>
-                  </Grid>
-                  <Grid item xs={xs} sm={sm} md={md}>
-                    <Form.Item name="id_zona" label="Zona" >
-                      <Select
-                        key={Uid(2)}
-                        allowClear
-                        mode="multiple"
-                        placeholder="Por favor seleccione zona"
-                        options={zona}
-                        filterOption={(input, option) =>
-                                        (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
-                                    }
-                      />
-                    </Form.Item>
-                  </Grid>
-                  <Grid item xs={xs} sm={sm} md={md}>
-                    <Form.Item name="id_estado" label="Estado">
-                      <Select
-                        key={Uid(3)}
-                        allowClear
-                        mode="multiple"
-                        placeholder="Por favor seleccione estado"
-                        filterOption={(input, option) =>
-                                        (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
-                                    }
-                        options={estado}
-                      />
-                    </Form.Item>
-                  </Grid>
-                  <Grid item xs={xs} sm={sm} md={md}>
-                    <Form.Item name="id_csa_territorio" label="CSA">
-                      <Select
-                        key={Uid(4)}
-                        allowClear
-                        mode="multiple"
-                        placeholder="Por favor seleccione csa/territorio"
-                        filterOption={(input, option) =>
-                                        (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
-                                    }
-                        options={csa}
-                      />
-                    </Form.Item>
-                  </Grid>
-                  <Grid item xs={xs} sm={sm} md={md}>
-                    <Form.Item name="id_marca" label="Marca">
-                      <Select
-                        key={Uid(5)}
-                        allowClear
-                        mode="multiple"
-                        placeholder="Por favor seleccione marca"
-                        filterOption={(input, option) =>
-                                        (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
-                                    }
-                        options={marca}
-                      />
-                    </Form.Item>
-                  </Grid>
-                  <Grid item xs={xs} sm={sm} md={md}>
-                    <Form.Item name="id_representacion" label="Tipo">
-                      <Select
-                        key={Uid(6)}
-                        allowClear
-                        mode="multiple"
-                        placeholder="Por favor seleccione tipo"
-                        filterOption={(input, option) =>
-                                        (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
-                                    }
-                        options={tipo}
-                      />
-                    </Form.Item>
-                  </Grid>
-                  <Grid item xs={xs} sm={sm} md={md}>
-                    <Form.Item name="id_grupo" label="Grupo">
-                      <Select
-                        key={Uid(7)}
-                        allowClear
-                        mode="multiple"
-                        placeholder="Por favor seleccione grupo"
-                        filterOption={(input, option) =>
-                                        (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
-                                    }
-                        options={grupo}
-                      />
-                    </Form.Item>
-                  </Grid>
-                  <Grid item xs={xs} sm={sm} md={md}>
-                    <Form.Item name="id_distribuidor" label="Distribuidor">
-                      <Select
-                        key={Uid(8)}
-                        allowClear
-                        mode="multiple"
-                        placeholder="Por favor seleccione distribuidor"
-                        filterOption={(input, option) =>
-                                        (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
-                                    }
-                        options={distribuidor}
-                      />
-                    </Form.Item>
-                  </Grid>
-                  <Grid item xs={xs} sm={sm} md={md}>
-                    <Form.Item>
-                      <Button
-                        loading={loading}
-                        block={true}
-                        style={{
-                          backgroundColor: themeGral.header_colorIconMenu,
-                          color: 'white',
-                          position: "absolute",
-                          align: 'center',
-                          right: -5,
-                          top: -10,
-                        }}
-                        htmlType="submit"
-                        shape="round"
-                        icon={<Icon icon={"line-md:search"} style={{ fontSize: 20, verticalAlign: '-0.125em' }} />}
-                        size={"large"}
-                      >
-                        <span style={{ marginLeft: '8px' }}  >Consultar</span>
-                      </Button>
-                    </Form.Item>
-                  </Grid>
-                </Grid>
-              </Form>
+              <Filtros onFinish={onFinish} loadingConsultar={loading} />
             </CardAntd>
           </Grid>
+
           <Grid item xs={12}>
             <CardAntd
               extra={
