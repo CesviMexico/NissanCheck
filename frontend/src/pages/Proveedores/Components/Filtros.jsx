@@ -48,7 +48,7 @@ const Filtros = (props) => {
                 parametros,
             )
 
-            console.log(`Params-->${tipo}`, response.params)
+            // console.log(`Params-->${tipo}`, response.params)
 
 
             switch (response.status) {

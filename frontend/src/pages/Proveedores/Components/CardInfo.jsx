@@ -14,22 +14,25 @@ import CardHeader from '@mui/material/CardHeader';
 
 import BadgeMUIImg from '../../../components/Global/BadgeComponent'
 
+import { Uid } from '../../../components/Global/funciones'
+
 
 import { Image, Tooltip, } from 'antd';
 
 const CardInfo = (props) => {
-    const { onviewFicha, dataItem, onviewGal, modalHist, onViewMaps, fontSize = 25 } = props
+    const { onviewFicha, dataItem, onviewGal, modalHist, onViewMaps, fontSize = 25, index } = props
 
     const themeContext = useContext(ThemeContext);
     const { themeGral } = themeContext;   
 
     return (
-        <Card sx={{ borderRadius: 10, width: '100%', maxWidth: '100%' }}>
+        <Card sx={{ borderRadius: 10, width: '100%', maxWidth: '100%' }}  key={Uid(index+1)} >
             <CardHeader
                 sx={{ borderRadius: 0, mb: -2, border: 0, width: '100%', mt: -2 }}
                 action={
-                    <Tooltip title="Historial de auditorías">
+                    <Tooltip title="Historial de auditorías" key={Uid(index+2)}>
                         <IconButton
+                        key={Uid(index+3)}
                             onClick={() => modalHist(dataItem.url_code)}
                             size="medium"
                             variant="plain"
@@ -37,6 +40,7 @@ const CardInfo = (props) => {
                             sx={{ ml: 'auto', alignSelf: 'flex-start', mt: -0.5, mb: -1, mr: -2 }}
                         >  
                             <BadgeMUIImg
+
                                 sizeIcon={themeGral.table_sizeIcon}
                                 icon={"fluent:document-text-clock-20-regular"}
                                 badgeContent={dataItem.noAudito }

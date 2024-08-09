@@ -23,7 +23,7 @@ import { SyncOutlined, } from '@ant-design/icons';
 import Data, { DataHistorico, GetGalery } from "./Services";
 import { DataFicha } from "../Distribuidor/Services";
 
-import { ExportToExcel,  FiterData } from '../../components/Global/funciones'
+import { ExportToExcel, FiterData, Uid } from '../../components/Global/funciones'
 
 //component local
 import Filtros from "./Components/Filtros";
@@ -298,6 +298,49 @@ const Proveedores = (props) => {
     setLoadingFicha(false)
   }
 
+  const ImporExcelFiltrator = () => {
+    let ArregloFiltrado = FiterData(dataItem, filter)
+    // console.log('ArregloFiltrado', ArregloFiltrado);
+
+    const arregloModificado = ArregloFiltrado.map(obj => {
+      const { 
+        cod_acceso,
+        Longitud,
+        cumplimiento,
+        date_ls_DB,
+        date_str,
+        date_str2,
+        idRepresentacion,
+        id_csa_territorio,
+        id_distribuidor,
+        id_estado,
+        id_grupo,
+        id_marca,
+        id_representacion,
+        id_taller,
+        id_zona,
+        latitud,
+        latitude212,
+        limite_1,
+        limite_2,
+        limite_3,
+        noAudito,
+        ord_representacion,
+        path_img,
+        url_code,
+        value,
+
+
+
+        ...nuevoObj } = obj;
+      return nuevoObj;
+    });
+
+    // console.log('arregloModificado', arregloModificado);
+
+    ExportToExcel({ datasource: arregloModificado, Title: "Resultados de la búsqueda", })
+  }
+
 
   return (
     <>
@@ -393,7 +436,7 @@ const Proveedores = (props) => {
                   </Tooltip>
                   <Tooltip title={"Exportar a Excel"} >
                     <IconButton aria-label="settings"
-                      onClick={() => ExportToExcel({ datasource: FiterData(dataItem, filter), Title: "Resultados de la búsqueda", })}
+                      onClick={() => ImporExcelFiltrator()}
                     >
                       <Icon icon={"mdi:microsoft-excel"} style={{ fontSize: themeGral.table_sizeIcon, color: themeGral.header_colorIconMenu }} />
                     </IconButton>
@@ -413,6 +456,7 @@ const Proveedores = (props) => {
                 renderItem={(dataItem, index) =>
                   <List.Item>
                     <CardInfo
+                      index={index}
                       dataItem={dataItem}
                       onviewGal={onviewGal}
                       modalHist={modalHist}

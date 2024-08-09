@@ -64,6 +64,8 @@ const Busqueda = () => {
           setTabData(response.data)
           setOptions(response.options)
 
+          ImporExcelFiltrator(false,response.data)
+
           break;
 
         default:
@@ -191,6 +193,7 @@ const Busqueda = () => {
   const [valueSelect, setValueSelect] = useState(0)
   const onSelect = (value) => {
     setValueSelect(value)
+    ImporExcelFiltrator(value,tabData)
   }
 
   //maps
@@ -215,6 +218,50 @@ const Busqueda = () => {
     setZoom(5)
     setCreate('null')
   }, []);
+
+  const [arregloModificadoH, setArregloModificadoH] = useState([])
+
+
+  const ImporExcelFiltrator = (valueSelect, tabData) => {
+    let ArregloFiltrado = valueSelect ? tabData.filter(Item => Item.value == valueSelect) : tabData
+    // console.log('ArregloFiltrado', ArregloFiltrado);
+    const arregloModificado = ArregloFiltrado.map(obj => {
+      const { 
+        cod_acceso,
+        Longitud,
+        cumplimiento,
+        date_ls_DB,
+        date_str,
+        date_str2,
+        idRepresentacion,
+        id_csa_territorio,
+        id_distribuidor,
+        id_estado,
+        id_grupo,
+        id_marca,
+        id_representacion,
+        id_taller,
+        id_zona,
+        latitud,
+        latitude212,
+        limite_1,
+        limite_2,
+        limite_3,
+        noAudito,
+        ord_representacion,
+        path_img,
+        url_code,
+        value,
+        ...nuevoObj } = obj;
+      return nuevoObj;
+    });
+
+    setArregloModificadoH(arregloModificado)
+    // console.log('arregloModificado', arregloModificado);  
+  }
+
+
+
 
   return (
     <>
@@ -302,6 +349,7 @@ const Busqueda = () => {
               IconAvatar={tabProps && tabProps.IconAvatar}
               OnClickAction={OnClickAction}
               ExportaExcel={true}
+              ExportaExcelOtro={arregloModificadoH}
               ActualizaTabla={ActualizaTabla}
             />
           </Grid>

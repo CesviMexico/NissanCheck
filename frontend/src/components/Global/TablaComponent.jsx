@@ -348,18 +348,18 @@ const TablaANTD = (props) => {
           <Tooltip
             placement="topRight"
             title={tooltip}
-            key={Uid(index+1)}
+            key={Uid(index + 1)}
           >
             {titleMSG ?
               <Popconfirm
-                key={Uid(index+2)}
+                key={Uid(index + 2)}
                 title={titleMSG}
                 okText="Si"
                 cancelText="No"
                 onConfirm={() => OnClickAction(row, key)}
               >
                 <>
-                  <Icon icon={IconAction} key={Uid(index+3)}
+                  <Icon icon={IconAction} key={Uid(index + 3)}
                     style={{
                       cursor: "pointer",
                       fontSize: themeGral.action_sizeIcon,
@@ -371,7 +371,7 @@ const TablaANTD = (props) => {
               </Popconfirm>
               :
               <>
-                <Icon icon={IconAction} key={Uid(index+4)}
+                <Icon icon={IconAction} key={Uid(index + 4)}
                   style={{
                     cursor: "pointer",
                     fontSize: themeGral.action_sizeIcon,
@@ -387,10 +387,10 @@ const TablaANTD = (props) => {
       </>
     );
   };
-  const objAccionesBooleano = (key, IconAction, titleMSG, campoAvalidar,tooltip) => ({
-    render: (text, row, index) => actionBooleano(row, key, IconAction, titleMSG, text, campoAvalidar, index,tooltip),
+  const objAccionesBooleano = (key, IconAction, titleMSG, campoAvalidar, tooltip) => ({
+    render: (text, row, index) => actionBooleano(row, key, IconAction, titleMSG, text, campoAvalidar, index, tooltip),
   })
-  const actionBander = (row, key, icon, titleMSG, text, campoAvalidar, valorAvalidar,tooltip) => {
+  const actionBander = (row, key, icon, titleMSG, text, campoAvalidar, valorAvalidar, tooltip) => {
     return (
       <>
         {row[campoAvalidar] === valorAvalidar &&
@@ -432,8 +432,8 @@ const TablaANTD = (props) => {
       </>
     );
   };
-  const objAccionesBandera = (key, icon, titleMSG, campoAvalidar, valorAvalidar,tooltip) => ({
-    render: (text, row, index) => actionBander(row, key, icon, titleMSG, text, campoAvalidar, valorAvalidar,tooltip),
+  const objAccionesBandera = (key, icon, titleMSG, campoAvalidar, valorAvalidar, tooltip) => ({
+    render: (text, row, index) => actionBander(row, key, icon, titleMSG, text, campoAvalidar, valorAvalidar, tooltip),
   })
   const rate = (row, nameValue,) => {
     return (
@@ -453,9 +453,9 @@ const TablaANTD = (props) => {
           size={Number(size)}
           key={Uid()}
           src={row[nameUrl]}
-          // style={{
-          //   backgroundColor: themeGral.table_color,
-          // }}
+        // style={{
+        //   backgroundColor: themeGral.table_color,
+        // }}
         >
           {row[nameTexShow]}
         </Avatar>
@@ -481,7 +481,7 @@ const TablaANTD = (props) => {
   const objNo = () => ({
     render: (text, record, index) => (index + 1),
   })
-  const action = (row, key, IconAction, titleMSG, index, text,tooltip) => {
+  const action = (row, key, IconAction, titleMSG, index, text, tooltip) => {
     return (
       <Tooltip
         title={tooltip}
@@ -528,8 +528,8 @@ const TablaANTD = (props) => {
       </Tooltip>
     );
   };
-  const objAcciones = (key, IconAction, titleMSG,tooltip) => ({
-    render: (text, row, index) => action(row, key, IconAction, titleMSG, index, text,tooltip),
+  const objAcciones = (key, IconAction, titleMSG, tooltip) => ({
+    render: (text, row, index) => action(row, key, IconAction, titleMSG, index, text, tooltip),
   })
   // ver imagen
   const [visibleIMG, setVisibleIMG] = useState(false);
@@ -829,10 +829,10 @@ const TablaANTD = (props) => {
         col,
         col.no && objNo(),
         col.getInformation && objGetInformation(col.key, col.titleMSG, col.icon, col.tipoFile, col.multipleFile, col.listType, col.actionUrl, col.campoAvalidar, col.nameid),
-        col.actionsBandera && objAccionesBandera(col.key, col.icon, col.iconB, col.titleMSG, col.campoAvalidar, col.valorAvalidar,col.Tooltip),
+        col.actionsBandera && objAccionesBandera(col.key, col.icon, col.iconB, col.titleMSG, col.campoAvalidar, col.valorAvalidar, col.Tooltip),
         col.actionsEstaus && objAccionesEstaus(col.key, col.icon, col.iconB, col.titleMSG, col.titleMSGB, col.campoAvalidar, col.valorAvalidar, col.Tooltip, col.TooltipB),
-        col.actionsBooleano && objAccionesBooleano(col.key, col.icon, col.titleMSG, col.campoAvalidar,col.Tooltip),
-        col.actions && objAcciones(col.key, col.icon, col.titleMSG,col.Tooltip),
+        col.actionsBooleano && objAccionesBooleano(col.key, col.icon, col.titleMSG, col.campoAvalidar, col.Tooltip),
+        col.actions && objAcciones(col.key, col.icon, col.titleMSG, col.Tooltip),
         col.avatar && objAvatar(col.nameUrl, col.size, col.nameTexShow, col.shape),
         col.icono && objIcon(col.nameUrl, col.size,),
         col.rate && objRate(col.nameValue,),
@@ -990,8 +990,9 @@ const TablaANTD = (props) => {
                 </>
               }
             >
-              <DndProvider backend={HTML5Backend}>
+              <DndProvider backend={HTML5Backend} key={Uid(1.3)}>
                 <Table
+                  key={Uid(1.4)}
                   virtual={virtual}
                   loading={loading}
                   dataSource={datasource}
@@ -1049,8 +1050,9 @@ const TablaANTD = (props) => {
             </CardMUI>
           </div>
           :
-          <DndProvider backend={HTML5Backend}>
+          <DndProvider backend={HTML5Backend} key={Uid(1.5)}>
             <Table
+              key={Uid(1.6)}
               virtual={virtual}
               loading={loading}
               dataSource={datasource}
@@ -1058,7 +1060,7 @@ const TablaANTD = (props) => {
               bordered={bordered}
               size={size}
               tableLayout={tableLayout}
-              
+
               // pagination={
               //   pagination !== false &&
               //   {
@@ -1070,15 +1072,15 @@ const TablaANTD = (props) => {
               // }
 
               pagination={
-                    pagination !== false &&
-                    {
-                      responsive: true,
-                      pageSize: pageSizeTbl,
-                      simple: simplepage,
-                      position: [positionTop, positionBottom],
-                      onChange: handleTableChange,
-                    }
-                  }
+                pagination !== false &&
+                {
+                  responsive: true,
+                  pageSize: pageSizeTbl,
+                  simple: simplepage,
+                  position: [positionTop, positionBottom],
+                  onChange: handleTableChange,
+                }
+              }
 
 
               scroll={{ x: scrollX, y: scrollY }}
@@ -1112,7 +1114,7 @@ const TablaANTD = (props) => {
           onCancel={handleCancel}>
           <img alt="example" style={{ width: '100%', }} src={previewImage} />
         </ModdalANTD>
-      </ConfigProvider >
+      </ConfigProvider>
     </>
   );
 }
