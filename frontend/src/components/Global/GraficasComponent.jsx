@@ -57,11 +57,11 @@ export const PastelChart = (props) => {
 }
 
 export const RadarChart = (props) => {
-    const { data } = props
+    const { data,options } = props
     ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend);
 
     return (
-        <Radar data={data} />
+        <Radar data={data} options={options} />
     )
 }
 
