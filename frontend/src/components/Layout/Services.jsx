@@ -44,4 +44,32 @@ export const DataOneUser = async (setloading, msErrorApi, keycloak, logoutOption
     return response
 }
 
+
+export const DetalleApiGet = async (setloading, msErrorApi, keycloak, logoutOptions) => {
+    const response = await getAxiosLumen({
+        uri: `/Censo/Report/detalle`,
+        setloading: setloading,
+        msErrorApi: msErrorApi,
+        keycloak: keycloak,
+        notification: false,
+        request: 'get',
+        logoutOptions: logoutOptions,
+    })
+    return response
+}
+
+export const xPartesApiGet = async (setloading, msErrorApi, keycloak, logoutOptions) => {
+    const response = await getAxiosLumen({
+        uri: `/Censo/Report/xPartes`,
+        setloading: setloading,
+        msErrorApi: msErrorApi,
+        keycloak: keycloak,
+        notification: false,
+        request: 'get',
+        logoutOptions: logoutOptions,
+    })
+    return response
+}
+
+
 export default DataMenu;

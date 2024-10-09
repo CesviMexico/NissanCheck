@@ -28,9 +28,18 @@ import { AvatarMUI } from "../Global/AvatarComponent";
 import BadgeMUIImg from "../Global/BadgeComponent";
 import CloudPlatform from './CloudPlatform'
 import CardColaborador, { GridColaborador } from "../Global/Colaborador/CardColaborador";
+// FUNCIONES
+import { ExportToExcel } from '../Global/funciones'
+import { DetalleApiGet, xPartesApiGet } from "./Services"
+
 
 //servicios
 import { DataOneUser } from "./Services";
+
+//JVV
+import { writeFile, utils } from 'xlsx';
+ 
+
 
 const { Header } = AntLayout;
 
@@ -150,6 +159,97 @@ const HeaderComponent = () => {
     swicthTipo[tipo]();
   };
 
+
+  const [loadingDetalle, setloadingDetalle] = useState(false);
+  const DetalleApi = async () => {
+    try {
+      const response = await DetalleApiGet(
+        setloadingDetalle,
+        msErrorApi,
+        keycloak,
+        logoutOptions,
+      )
+
+      switch (response.status) {
+        case 403:
+          setloadingDetalle(false);
+          break;
+
+        case undefined:
+          setloadingDetalle(false);
+          break;
+
+        case 200:
+          ExportToExcel({ datasource: response.data, Title: response.message })
+          break;
+
+        default:
+          break;
+      }
+    } catch (error) {
+      setloadingDetalle(false);
+    }
+
+  }
+
+
+  const descargar = (datasourceExportar,datasource, T1,T2) => {
+ 
+    //ExportToExcel({ datasource: datasourceExportar, Title: "ok" })
+ 
+    const wb = utils.book_new(); // Crear nuevo libro de trabajo (workbook)
+ 
+    // Crear hoja de trabajo para el primer array
+    const ws1 = utils.json_to_sheet(datasourceExportar);
+    utils.book_append_sheet(wb, ws1, T1); // Agregar hoja con nombre 'Sheet1'
+ 
+    // Crear hoja de trabajo para el segundo array
+    const ws2 = utils.json_to_sheet(datasource);
+    utils.book_append_sheet(wb, ws2, T2); // Agregar hoja con nombre 'Sheet2'
+ 
+    // Exportar el archivo
+    writeFile(wb, T1+'.xlsx'); // Nombre del archivo de salida
+ 
+  }
+
+
+  const [loadingxPartesApi, setloadingxPartesApi] = useState(false);
+  const xPartesApi = async () => {
+    try {
+      const response = await xPartesApiGet(
+        setloadingxPartesApi,
+        msErrorApi,
+        keycloak,
+        logoutOptions,
+      )
+
+      switch (response.status) {
+        case 403:
+          setloadingxPartesApi(false);
+          break;
+
+        case undefined:
+          setloadingxPartesApi(false);
+          break;
+
+        case 200:
+          // ExportToExcel({ datasource: response.data, Title: response.message })
+          descargar(response.data,response.dataClasicacion,response.message,response.message2)
+
+          break;
+
+        default:
+          break;
+      }
+    } catch (error) {
+      setloadingxPartesApi(false);
+    }
+
+  }
+
+
+
+
   return (
     <Header
       className="site-layout-background"
@@ -177,7 +277,7 @@ const HeaderComponent = () => {
       </Typography>
 
       <Box sx={{ position: "relative", float: "right", mt: 1 }}>
-        <Tooltip title="Configuraciones de la cuenta">
+        <Tooltip title="Datos de la cuenta">
           <IconButton
             onClick={handleClick}
             size="small"
@@ -263,30 +363,46 @@ const HeaderComponent = () => {
         </Box>
 
 
-        <Divider />  <Divider />
-        {/* 
-        <MenuItemB>
-          <ListItemIcon>
-            <Icon
-              icon={"mdi:card-account-details-star-outline"}
-              style={{ fontSize: themeGral.header_sizeIcon, color: themeGral.header_colorIconMenu }}
-            />
-          </ListItemIcon>
-          <Typography variant="caption" display="block" gutterBottom>
-            Portafolio
-          </Typography>
-        </MenuItemB> */}
-        {/* <MenuItemB>
-          <ListItemIcon>
-            <Icon
-              icon={"material-symbols:settings-account-box-outline-rounded"}
-              style={{ fontSize: themeGral.header_sizeIcon, color: themeGral.header_colorIconMenu }}
-            />
-          </ListItemIcon>
-          <Typography variant="caption" display="block" gutterBottom>
-            Configuracion
-          </Typography>
-        </MenuItemB> */}
+        <Divider />
+        {
+          user.id_rol === 3 ?
+            <Divider />
+            :
+            <Box>
+              <MenuItemB
+                disabled={loadingDetalle}
+                onClick={() => DetalleApi()}
+              >
+                <ListItemIcon>
+                  <Icon
+                    icon={"vscode-icons:file-type-excel"}
+                    style={{ fontSize: themeGral.header_sizeIcon, color: themeGral.header_colorIconMenu }}
+                  />
+                </ListItemIcon>
+                <Typography variant="caption" display="block" gutterBottom>
+                  Reporte detalle
+                </Typography>
+              </MenuItemB>
+              <Divider />
+              <MenuItemB
+                disabled={loadingxPartesApi}
+                onClick={() => xPartesApi()}
+              >
+                <ListItemIcon>
+                  <Icon
+                    icon={"vscode-icons:file-type-excel"}
+                    style={{ fontSize: themeGral.header_sizeIcon, color: themeGral.header_colorIconMenu }}
+                  />
+                </ListItemIcon>
+                <Typography variant="caption" display="block" gutterBottom>
+                  Reporte No.parte
+                </Typography>
+              </MenuItemB>
+            </Box>
+        }
+
+        <Divider />
+
 
         {!keycloak.authenticated && (
           <MenuItemB onClick={(event) => handleSalir(event, "Login")}>
